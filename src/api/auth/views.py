@@ -11,8 +11,7 @@ from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-
-from root.settings import  GOOGLE_CALLBACK_ADDRESS, APPLE_CALLBACK_ADDRESS
+from root.settings import GOOGLE_CALLBACK_ADDRESS, APPLE_CALLBACK_ADDRESS
 from src.api.auth.serializer import PasswordSerializer, UserSerializer
 
 
@@ -21,15 +20,18 @@ class GoogleLogin(SocialLoginView):
     callback_url = GOOGLE_CALLBACK_ADDRESS
     client_class = OAuth2Client
 
+
 class GoogleConnect(SocialConnectView):
     adapter_class = GoogleOAuth2Adapter
     callback_url = GOOGLE_CALLBACK_ADDRESS
     client_class = OAuth2Client
 
+
 class AppleLogin(SocialLoginView):
     adapter_class = AppleOAuth2Adapter
     callback_url = APPLE_CALLBACK_ADDRESS
     client_class = OAuth2Client
+
 
 class AppleConnect(SocialConnectView):
     adapter_class = AppleOAuth2Adapter
@@ -114,3 +116,4 @@ class DeleteUserAPIView(APIView):
             data={'message': 'User account has been deactivated'},
             status=status.HTTP_200_OK
         )
+

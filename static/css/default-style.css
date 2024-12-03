@@ -1,0 +1,507 @@
+/*
+
+Template:  Fit Club - Responsive Multi-purpose HTML5 Template
+Author: 
+Design and Developed by: 
+
+NOTE: This is color stylesheet of Color Scheme.
+
+*/
+
+
+/*---- General ----*/
+
+
+/* selection */
+
+*::-moz-selection {
+    background: #ec3642;
+    color: #fff;
+    text-shadow: none;
+}
+
+::-moz-selection {
+    background: #ec3642;
+    color: #fff;
+    text-shadow: none;
+}
+
+::selection {
+    background: #ec3642;
+    color: #fff;
+    text-shadow: none;
+}
+
+
+/*************************
+	 Background Color
+*************************/
+
+.theme-bg,
+.accordion.gray .acd-group.acd-active .acd-heading,
+.accordion.gray .acd-group .acd-heading:hover,
+.accordion.shadow .acd-group.acd-active .acd-heading,
+.accordion.shadow .acd-group .acd-heading:hover,
+.accordion.accordion-border .acd-group.acd-active .acd-heading,
+.accordion.accordion-border .acd-group .acd-heading:hover,
+.cs-button,
+.cs-button.gray:hover,
+.cs-button.gray.active,
+.cs-button.gray:focus,
+.cs-button.border:hover,
+.cs-button.border:focus,
+.cs-button.border.gray:hover,
+.cs-button.border.gray:focus,
+.cs-button.black:hover,
+.cs-button.black.active,
+.cs-button.black:focus,
+.btn-primary,
+.btn-primary.active.focus,
+.btn-primary.active:focus,
+.btn-primary.active:hover,
+.btn-primary:active.focus,
+.btn-primary:active:focus,
+.btn-primary:active:hover,
+.owl-carousel .owl-dots .owl-dot:hover span,
+.owl-carousel .owl-dots .owl-dot.active span,
+.data-table .table-1 thead,
+.dropcap,
+mark,
+.feature-text.round:hover .feature-icon i,
+.feature-text.round:hover .feature-icon span,
+.feature-text.theme-icon .feature-icon span,
+.feature-text.theme-icon .feature-icon i,
+.feature-text.square:hover .feature-icon i,
+.feature-text.square:hover .feature-icon span,
+.feature-box .border,
+.portfolio-item .portfolio-overlay,
+.portfolio-item a.popup:hover,
+.section-title.line .title:before,
+.section-title.bg span,
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover,
+.list-group-item.active,
+.list-group-item.active:focus,
+.list-group-item.active:hover,
+.panel-primary>.panel-heading,
+.price.active .header,
+.membership-pricing-table table .plan-header-standard,
+.play-video,
+.nav-border .nav.nav-tabs > li.active > a,
+.nav-border .nav.nav-tabs > li.active > a:focus,
+.nav-border .nav.nav-tabs > li.active > a:hover,
+.testimonial.green,
+.mejs-controls .mejs-time-rail .mejs-time-current,
+.mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-current,
+.mejs-controls .mejs-volume-button .mejs-volume-slider,
+.footer .footer-tags li a:hover,
+.section-title:nth-child(odd) .title-effect::before,
+.isotope-filters button.active,
+.isotope-filters button:hover,
+.blog-entry.blockquote,
+.blog-entry.blockquote blockquote,
+.blog-entry.blockquote .blog-detail,
+.blog-box .post-category a,
+.blog .timeline li:hover .timeline-badge,
+.blog .timeline li.entry-date-bottom a:hover,
+.contact-box i,
+.custom-content,
+.owl-carousel .owl-nav i,
+.services-text-box-green,
+.popup-video-banner a:hover span,
+.process .process-step strong,
+.tab .nav.nav-tabs > li.active > a,
+.nav.nav-tabs > li.active > a:focus,
+.nav.nav-tabs > li.active > a:hover,
+.testimonial.theme-bg,
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover,
+.pagination li a:focus,
+.pagination li a:hover,
+.pagination li span:focus,
+.pagination li span:hover {
+    background: #ec3642;
+}
+
+.popup-video-image a i,
+.conference-video .popup-video a i:hover,
+.blog-overlay .tag,
+.blog.blog-simple .tag,
+.section-title.line-dabble .title:after,
+.feature-box .feature-border,
+.process-bar,
+.cs-button.cs-button-border:hover,
+.cs-button.cs-button-border:focus,
+.tab .nav.nav-tabs > li > a.active,
+.page-item.active .page-link,
+.cs-button.cs-button-border.gray:hover,
+.cs-button.cs-button-border.gray:focus,
+.bootstrap-datetimepicker-widget table td span.active,
+.section-title span.theme-bg,
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.show>.btn-primary.dropdown-toggle:focus,
+.btn-primary.focus,
+.btn-primary:focus,
+.wishlist-page .table td.total a:hover,
+.wishlist-page .table td.total a:hover,
+.service ul li a:hover,
+.service ul li a.active,
+.play-video-section.black-button .play-video:hover,
+.portfolio-item .portfolio-overlay a.tag {
+    background: #ec3642;
+}
+
+
+/*************************
+        Color
+*************************/
+
+a,
+button,
+input,
+.theme-color,
+a:focus,
+a:hover,
+.search .search-btn:hover,
+.search .search-box i:hover,
+.accordion .acd-group.acd-active .acd-heading,
+.accordion .acd-group .acd-heading:hover,
+.accordion.animated .acd-group.acd-active .acd-heading,
+.accordion.animated .acd-group .acd-heading:hover,
+.cs-button.border.white:hover,
+.cs-button.border.white:focus,
+.cs-button.icon-color,
+.counter.theme-color span,
+.data-table .table-2 .table thead,
+.dropcap.dropcap-border,
+.dropcap.gray,
+.feature-box i,
+#two+label:before,
+#two+label:after,
+.remember-checkbox a,
+.cs-button.white,
+.no-title .portfolio-item .portfolio-overlay a:hover,
+.no-title .portfolio-item .portfolio-overlay a:hover,
+.list-group-item.active>.badge,
+.nav-pills>.active>a>.badge,
+.btn-primary .badge,
+ul.list li:after,
+.blog-entry .entry-meta ul li a i,
+.cs-button.arrow,
+.pricing-content .pricing-table-list ul li i,
+.tab-border .nav.nav-tabs > li.active > a,
+.tab-border .nav.nav-tabs > li.active > a:focus,
+.tab-border .nav.nav-tabs > li.active > a:hover,
+.team .team-contact span.call,
+.testimonial-info:before,
+.author-info span,
+.text-white .testimonial.clean .author-info,
+ul.page-breadcrumb li a:hover,
+.page-title.bg-gray ul.page-breadcrumb li span,
+.page-title.bg-gray ul.page-breadcrumb li a:hover,
+.page-title.pattern ul.page-breadcrumb li span,
+.page-title.pattern ul.page-breadcrumb li a:hover,
+section:hover .title-effect:nth-child(even),
+section:focus .title-effect:nth-child(even),
+.theme-bg .cs-button.icon-color:hover i,
+.sidebar .recent-post .recent-post-info a:hover,
+.sidebar .recent-post .recent-post-info span,
+.sidebar .widget-categories li a:hover,
+.sidebar .widget-categories li a:hover i,
+.blog-single .blog-post.blockquote blockquote cite,
+.portfolio-post-social a:hover,
+.comments-1 .comments-info a,
+.blog-post .blog-detail .entry-title a:hover,
+.blog-post .entry-meta ul li a:hover,
+.contact-3 .contact-add i,
+.happy-clients .tab-content .quoter-icon,
+.google-map .map-icon:before,
+.play-video:hover,
+.popup-video .play-video:hover a,
+.play-video:hover a,
+.portfolio-item-2 .portfolio-hover .hover-name a:hover,
+.portfolio-item-2 .portfolio-hover .hover-icon a:hover,
+.blog-entry .entry-meta ul li i,
+ul.list.theme-color li i,
+.testimonials.text-white.clean .author-info {
+    color: #ec3642;
+}
+
+.portfolio-item.simple-effect .portfolio-overlay a:hover,
+.portfolio-item.simple-effect .portfolio-overlay span a:hover,
+.blockquote-section blockquote.quote:before,
+.play-video-section .play-video a,
+.dark-theme-bg .addresss-info i,
+.isotope-filters.dark-bg button.active,
+.timer-banner .slider-content .timer-box .countdown-timer .countdown span.dot,
+.conference-video .popup-video a i,
+.christmas-event .blog-detail .entry-title a:hover,
+.christmas-event .entry-meta ul li i,
+.christmas-event .entry-meta ul li a i,
+.christmas-event .entry-meta ul li a:hover,
+header.one-page.light .navbar-inverse .navbar-nav>.active>a,
+header.one-page.light .navbar-inverse .navbar-nav>.active>a:focus,
+header.one-page.light .navbar-inverse .navbar-nav>.active>a:hover,
+header.one-page.light .navbar-inverse .navbar-nav>li>a:hover,
+.architecture-portfolio .isotope-filters button.active,
+.architecture-portfolio .isotope-filters button:hover,
+.architecture-portfolio .isotope-filters button.active,
+.architecture-portfolio .isotope-filters button:hover,
+.one-page.dark-text .navbar-inverse .navbar-nav>.active>a,
+.one-page.dark-text .navbar-inverse .navbar-nav>.active>a:focus,
+.one-page.dark-text .navbar-inverse .navbar-nav>.active>a:hover,
+.one-page.dark-text .navbar-inverse .navbar-nav>li>a:hover,
+.page-title.light-overlay ul.page-breadcrumb li span,
+.page-title.light-overlay ul.page-breadcrumb li a:hover,
+.wishlist-page .table td.price.price-2,
+.blog.blog-simple .entry-meta ul li a i,
+.blog.blog-simple .entry-meta ul li a:hover,
+.search .search-box button:hover,
+.cs-button.cs-button-border.white:hover,
+.cs-button.cs-button-border.white:focus,
+.shadow .nav.nav-tabs > li > a.active,
+.shadow .nav.nav-tabs > li > a.active:focus,
+.shadow .nav.nav-tabs > li > a.active:hover,
+.counter.theme-color span,
+.isotope-filters.filters-vertical button.active,
+.isotope-filters.filters-vertical button:hover,
+.counter.theme-color,
+.header.fancy .search .search-btn:hover,
+.counter.theme-color span,
+.isotope-filters.filters-vertical button.active,
+.isotope-filters.filters-vertical button:hover,
+.counter.theme-color,
+.header.fancy .search .search-btn:hover,
+.quote:before,
+.black-bg .cs-button.icon-color:hover,
+.addresss-info.invoice-addresss li a,
+.addresss-info.text-black i,
+ul.menu-sidebar li a:hover,
+ul.menu-sidebar li.active a {
+    color: #ec3642;
+}
+
+
+/*************************
+	 Border Color
+*************************/
+
+.cs-button,
+.cs-button.gray:hover,
+.cs-button.gray.active,
+.cs-button.gray:focus,
+.cs-button.border:hover,
+.cs-button.border:focus,
+.cs-button.border,
+.cs-button.border.gray:hover,
+.cs-button.border.gray:focus,
+.cs-button.black:hover,
+.cs-button.black.active,
+.cs-button.black:focus,
+.cs-button.icon-color i,
+.btn-primary,
+.btn-primary.active.focus,
+.btn-primary.active:focus,
+.btn-primary.active:hover,
+.btn-primary:active.focus,
+.btn-primary:active:focus,
+.btn-primary:active:hover,
+.open>.dropdown-toggle.btn-primary.focus,
+.open>.dropdown-toggle.btn-primary:focus,
+.open>.dropdown-toggle.btn-primary:hover,
+.data-table .table-2 .table thead tr th,
+.dropcap.dropcap-border,
+.feature-text.round:hover .feature-icon i,
+.feature-text.round:hover .feature-icon span,
+.feature-text.theme-icon .feature-icon span,
+.feature-text.theme-icon .feature-icon i,
+.feature-text.square:hover .feature-icon i,
+.feature-text.square:hover .feature-icon span,
+.remember-checkbox label:before,
+.list-group-item.active,
+.list-group-item.active:focus,
+.list-group-item.active:hover,
+.pricing-table.active .pricing-top,
+.pricing-table.active.boxed,
+.membership-pricing-table table .plan-header-standard,
+.nav-border .nav.nav-tabs > li.active > a:focus,
+.nav-border .nav.nav-tabs > li.active > a:hover,
+.nav-border .nav.nav-tabs > li.active > a,
+.nav-border .nav.nav-tabs > li.active > a:focus,
+.nav-border .nav.nav-tabs > li.active > a:hover,
+.testimonial-avatar img,
+.our-history .timeline > li > .timeline-badge,
+.isotope-filters button.active,
+.isotope-filters button:hover,
+.sidebar .widget-categories li a:hover i,
+.blog .timeline li:hover .timeline-badge,
+.blog .timeline li:hover .timeline-panel,
+.video-background-banner .slider-content,
+.service-blog ul,
+.service-blog.left ul,
+.personal-typer-banner h2,
+.personal-typer-banner b {
+    border-color: #ec3642;
+}
+
+.border-memu .navbar-inverse .navbar-nav>.active>a,
+.border-memu .navbar-inverse .navbar-nav>.active>a:focus,
+.border-memu .navbar-inverse .navbar-nav>.active>a:hover,
+.border-memu .navbar-inverse .navbar-nav a:hover,
+.agency-banner .slider-content h1,
+.login-box-left li.active a,
+.login-box-left li a:hover,
+.login-box-left li.active a,
+.login-box-left li a:hover,
+.blog-box.blog-2.blog-border .blog-info .tag,
+.tab.nav-bt .nav li.active,
+.tab.nav-bl .nav li.active,
+.tab.nav-br .nav li.active,
+.book-about blockquote,
+.hotel-banner-checkout .checkout,
+.tab .nav.nav-tabs > li.active > a,
+.nav.nav-tabs > li.active > a:focus,
+.nav.nav-tabs > li.active > a:hover,
+.cs-button.cs-button-border,
+.cs-button.cs-button-border:hover,
+.cs-button.cs-button-border:focus,
+.nav.nav-tabs > li > a.active:focus,
+.nav.nav-tabs > li > a.active:hover,
+.page-item.active .page-link,
+.mega-menu .menu-links > li.active a,
+.mega-menu .menu-links > li a:hover,
+.cs-button.cs-button-border.gray:hover,
+.cs-button.cs-button-border.gray:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.show>.btn-primary.dropdown-toggle:focus,
+.btn-primary.focus,
+.btn-primary:focus,
+.tab.nav-bt .nav.nav-tabs > li> a.active,
+.tab.nav-bl .nav.nav-tabs > li > a.active,
+.tab.nav-br .nav.nav-tabs > li > a.active,
+.isotope-filters.dark-bg button.active,
+.isotope-filters button:hover,
+.isotope-filters.filters-vertical button.active,
+.isotope-filters.filters-vertical button:hover,
+.wishlist-page .table td.total a:hover,
+.isotope-filters.dark-bg button.active,
+.isotope-filters button:hover,
+.isotope-filters.filters-vertical button.active,
+.isotope-filters.filters-vertical button:hover,
+.wishlist-page .table td.total a:hover,
+.spa-border:before,
+.team.team-list,
+.marketing-banner .slider-content {
+    border-color: #ec3642;
+}
+
+
+/*border left border right*/
+
+.blog .timeline li:hover .timeline-panel:before {
+    border-left-color: #ec3642;
+    border-right-color: #ec3642;
+}
+
+ul.menu-sidebar li a:hover,
+ul.menu-sidebar li.active a {
+    border-left-color: #ec3642;
+}
+
+
+/*************************
+ important
+*************************/
+
+.rev-color {
+    color: #ec3642 !important;
+}
+
+.rev-button,
+.rev-btn,
+.badge-primary,
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link,
+.bg-primary {
+    background: #ec3642 !important;
+}
+
+.rev-button:hover,
+.rev-btn:hover {
+    background: #ffffff !important;
+    color: #323232 !important;
+}
+
+.rev-bg {
+    background: #ec3642 !important;
+}
+
+.border-primary {
+    border-color: #ec3642 !important;
+}
+
+.progress-bar-new,
+.progress-bar {
+    background-color: #ec3642;
+}
+
+
+/*---- dark color ----*/
+
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.show>.btn-primary.dropdown-toggle:focus,
+.btn-primary.focus,
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(132, 186, 63, 0.5);
+}
+
+
+/*---- Rgba Background Color ----*/
+
+.st-menu ul.menu li a:before {
+    background: rgba(132, 186, 63, 0.4);
+}
+
+.bg-overlay-theme-10:before {
+    background: rgba(132, 186, 63, 0.1);
+}
+
+.bg-overlay-theme-20:before {
+    background: rgba(132, 186, 63, 0.2);
+}
+
+.bg-overlay-theme-30:before {
+    background: rgba(132, 186, 63, 0.3);
+}
+
+.bg-overlay-theme-40:before {
+    background: rgba(132, 186, 63, 0.4);
+}
+
+.bg-overlay-theme-50:before {
+    background: rgba(132, 186, 63, 0.5);
+}
+
+.bg-overlay-theme-60:before {
+    background: rgba(132, 186, 63, 0.6);
+}
+
+.bg-overlay-theme-70:before {
+    background: rgba(132, 186, 63, 0.7);
+}
+
+.bg-overlay-theme-80:before {
+    background: rgba(132, 186, 63, 0.8);
+}
+
+.bg-overlay-theme-90:before {
+    background: rgba(132, 186, 63, 0.9);
+}

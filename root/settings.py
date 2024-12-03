@@ -66,16 +66,16 @@ INSTALLED_APPS = [
     # YOUR APPS
     'src.core.apps.CoreConfig',
     'src.services.users.apps.UsersConfig',
+    'src.services.fee',
 
     # WEB APPS
     'src.web.website',
     'src.web.accounts',
     'src.web.admins',
-    'src.apps.whisper.apps.WhisperConfig',
 
     # mailchimp
     'mailchimp_transactional',
-    'notifications',
+    #  'notifications',
 ]
 # MAILCHIMP SETTINGS
 MAILCHIMP_API_KEY = env('MAILCHIMP_API_KEY')

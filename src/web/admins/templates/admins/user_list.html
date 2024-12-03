@@ -3,157 +3,154 @@
 {% load core_tags %}
 
 {% block subtitle %}
-    Users List
+Users List
 {% endblock %}
 
 {% block content %}
 
-    <div class="row">
-        <div class="col-12">
-            <form method="get">
-                <div class="input-group mb-3">
-                    {{ user_filter_form }}
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">
-                            <i class="fa fa-search"></i> Search
-                        </button>
-                    </div>
+<div class="row">
+    <div class="col-12">
+        <form method="get">
+            <div class="input-group mb-3">
+                {{ user_filter_form }}
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-search"></i> Search
+                    </button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
+</div>
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        {% if user_list %}
+                        <thead class="border-bottom">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>
+                                Package
+                            </th>
+                            <th>Referred By</th>
+                            <th>Active</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
+                        <tbody>
 
+                        {% for user in user_list %}
+                        <tr>
+                            <td>{{ user.pk }}</td>
+                            <td>{{ user.first_name }} {{ user.last_name }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {% if not user.current_subscription %}
+                                <b class="text-danger"><i class="fa fa-times-circle"></i> Free</b>
+                                {% else %}
+                                <b class="text-success">
+                                    <i class="fa fa-check-circle"></i> {{ user.current_subscription.package.name }}
+                                </b>
+                                {% endif %}
+                            </td>
+                            <td>
 
-                    <div class="table-responsive">
-                        <table class="table table-borderless">
-                            {% if user_list %}
-                                <thead class="border-bottom">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>
-                                        Package
-                                    </th>
-                                    <th>Referred By</th>
-                                    <th>Active</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
+                                {% if user.referred_by %}
+                                <b>
+                                    <a href="{% url 'admins:user-detail' user.referred_by.pk %}">
+                                        {{ user.referred_by.username }}
+                                    </a>
+                                </b>
+                                {% else %}
+                                <b class="text-danger">
+                                    None
+                                </b>
+                                {% endif %}
 
-                                <tbody>
+                            </td>
+                            <td>
+                                {% if user.is_active %}
+                                <b class="text-success"><i class="fa fa-check-circle"></i></b>
 
-                                {% for user in user_list %}
-                                    <tr>
-                                        <td>{{ user.pk }}</td>
-                                        <td>{{ user.first_name }} {{ user.last_name }}</td>
-                                        <td>{{ user.username }}</td>
-                                        <td>{{ user.email }}</td>
-                                        <td>
-                                            {% if not user.current_subscription %}
-                                                <b class="text-danger"><i class="fa fa-times-circle"></i> Free</b>
-                                            {% else %}
-                                                <b class="text-success">
-                                                    <i class="fa fa-check-circle"></i> {{ user.current_subscription.package.name }}
-                                                </b>
-                                            {% endif %}
-                                        </td>
-                                        <td>
+                                {% else %}
+                                <b class="text-danger"><i class="fa fa-times-circle"></i></b>
 
-                                            {% if user.referred_by %}
-                                                <b>
-                                                    <a href="{% url 'admins:user-detail' user.referred_by.pk %}">
-                                                        {{ user.referred_by.username }}
-                                                    </a>
-                                                </b>
-                                            {% else %}
-                                                <b class="text-danger">
-                                                    None
-                                                </b>
-                                            {% endif %}
+                                {% endif %}
+                            </td>
 
-                                        </td>
-                                        <td>
-                                            {% if user.is_active %}
-                                                <b class="text-success"><i class="fa fa-check-circle"></i></b>
+                            <td>
+                                <a href="{% url 'admins:user-detail' user.pk %}"
+                                   class="text-decoration-none"><i
+                                        class="mdi mdi-eye icon-sm"></i> View
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
 
-                                            {% else %}
-                                                <b class="text-danger"><i class="fa fa-times-circle"></i></b>
-
-                                            {% endif %}
-                                        </td>
-
-                                        <td>
-                                            <a href="{% url 'admins:user-detail' user.pk %}"
-                                               class="text-decoration-none"><i
-                                                    class="mdi mdi-eye icon-sm"></i> View
-                                            </a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-
-                                </tbody>
-                            {% else %}
-                                <th class="text-danger">No users data available.</th>
-                            {% endif %}
-                        </table>
-                    </div>
-
-
+                        </tbody>
+                        {% else %}
+                        <th class="text-danger">No users data available.</th>
+                        {% endif %}
+                    </table>
                 </div>
+
+
             </div>
         </div>
     </div>
+</div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="mt-4">
-                <ul class="pagination">
-                    {% if user_list.has_previous %}
-                        <li>
+<div class="row">
+    <div class="col-md-12">
+        <div class="mt-4">
+            <ul class="pagination">
+                {% if user_list.has_previous %}
+                <li>
                             <span>
                                 <a href="{% relative_url user_list.previous_page_number 'page' request.GET.urlencode %}">
                                     Previous
                                 </a>
                             </span>
-                        </li>
-                    {% endif %}
-                    <li class="">
-                        <span>Page {{ user_list.number }} of {{ user_list.paginator.num_pages }}.</span>
-                    </li>
-                    {% if user_list.has_next %}
-                        <li>
+                </li>
+                {% endif %}
+                <li class="">
+                    <span>Page {{ user_list.number }} of {{ user_list.paginator.num_pages }}.</span>
+                </li>
+                {% if user_list.has_next %}
+                <li>
                             <span>
                                 <a href="{% relative_url user_list.next_page_number 'page' request.GET.urlencode %}">
                                     Next
                                 </a>
                             </span>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
+                </li>
+                {% endif %}
+            </ul>
         </div>
     </div>
+</div>
 
 {% endblock %}
 
 {% block js_code %}
-    <script>
-        $(document).ready(function () {
+<script>
+    $(document).ready(function () {
 
-            $('label').hide();
-            $('input').addClass('form-control');
-            $('select').addClass('form-control');
+        $('label').hide();
+        $('input').addClass('form-control');
+        $('select').addClass('form-control');
 
-        });
-    </script>
+    });
+</script>
 {% endblock %}
 
 

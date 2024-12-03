@@ -1,4 +1,3 @@
-
 from allauth.account.adapter import DefaultAccountAdapter
 from django.shortcuts import resolve_url
 from django.urls import reverse
@@ -18,7 +17,6 @@ class MyAccountAdapter(DefaultAccountAdapter):
 
         else:
             return resolve_url('account_set_password')
-
 
     def respond_user_authenticated(self, request, user):
         """

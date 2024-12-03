@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block subtitle %}
+Fee Records
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <form method="get">
+            <div class="input-group mb-3">
+                <input type="text" name="search" class="form-control" placeholder="Search by username..."
+                       value="{{ search_query }}">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-search"></i> Search
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        {% if fee_list %}
+                        <thead class="border-bottom">
+                        <tr>
+                            <th>ID</th>
+                            <th>User</th>
+                            <th>Amount</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for fee in fee_list %}
+                        <tr>
+                            <td>{{ fee.id }}</td>
+                            <td>{{ fee.user.username }}</td>
+                            <td>{{ fee.total_amount|floatformat:2 }}</td>
+                            <td>{{ fee.due_date }}</td>
+                            <td>
+                                {% if fee.is_paid %}
+                                <b class="text-success"><i class="fa fa-check-circle"></i> Paid</b>
+                                {% else %}
+                                {% if fee.is_overdue %}
+                                <b class="text-danger"><i class="fa fa-times-circle"></i> Overdue</b>
+                                {% else %}
+                                <b class="text-warning"><i class="fa fa-clock"></i> Pending</b>
+                                {% endif %}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'fees:fee-detail' fee.id %}" class="text-decoration-none">
+                                    <i class="mdi mdi-eye icon-sm"></i> View
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                        {% else %}
+                        <th class="text-danger">No fee records available.</th>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="mt-4">
+            <ul class="pagination">
+                {% if fee_list.has_previous %}
+                <li>
+                    <a href="?page={{ fee_list.previous_page_number }}&search={{ search_query }}">Previous</a>
+                </li>
+                {% endif %}
+                <li>
+                    <span>Page {{ fee_list.number }} of {{ fee_list.paginator.num_pages }}.</span>
+                </li>
+                {% if fee_list.has_next %}
+                <li>
+                    <a href="?page={{ fee_list.next_page_number }}&search={{ search_query }}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

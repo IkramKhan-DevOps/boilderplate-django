@@ -78,6 +78,15 @@ class UserUpdateView(UpdateView):
         return reverse('admins:user-detail', kwargs={'pk': self.object.pk})
 
 
+def post(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    form = AdminPasswordChangeForm(data=request.POST, user=user)
+    if form.is_valid():
+        form.save(commit=True)
+        messages.success(request, f"{user.get_full_name()}'s password changed successfully.")
+    return render(request, 'admins/admin_password_reset.html', {'form': form, 'object': user})
+
+
 @method_decorator(staff_required_decorator, name='dispatch')
 class UserPasswordResetView(View):
 
@@ -86,20 +95,12 @@ class UserPasswordResetView(View):
         form = AdminPasswordChangeForm(user=user)
         return render(request, 'admins/admin_password_reset.html', {'form': form, 'object': user})
 
-    def post(self, request, pk):
-        user = get_object_or_404(User, pk=pk)
-        form = AdminPasswordChangeForm(data=request.POST, user=user)
-        if form.is_valid():
-            form.save(commit=True)
-            messages.success(request, f"{user.get_full_name()}'s password changed successfully.")
-        return render(request, 'admins/admin_password_reset.html', {'form': form, 'object': user})
-
-
 
 """ SOCIALS """
 
 from allauth.socialaccount.models import SocialAccount
 from django.views.generic import TemplateView
+
 
 class SocialsView(TemplateView):
     template_name = 'admins/social-accounts.html'

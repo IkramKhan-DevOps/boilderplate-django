@@ -1,0 +1,21 @@
+/*
+
+Template: Fit Club - Responsive Multi-purpose HTML5 Template
+Author:
+Design and Developed by: 
+
+NOTE:  This file includes all plugins. If you don't want to use any plugins from below. You can simply remove that line from this file.
+
+*/
+@import url("../vendor/bootstrap/css/bootstrap.min.css");
+@import url("../vendor/animate/animate.css");
+@import url("../vendor/owlcarousel/css/owl.theme.default.min.css");
+@import url("../vendor/owlcarousel/css/owl.carousel.css");
+@import url("../vendor/prettyPhoto/css/prettyPhoto.css");
+@import url("../vendor/themify-icons/themify-icons.css");
+@import url("../vendor/font-awesome/css/font-awesome.min.css");
+@import url("../vendor/corenav-master/coreNavigation-1.1.3.css");
+@import url("default-style.css");
+
+/*---nav style---*/
+@import url("nav-style.css");

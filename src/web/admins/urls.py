@@ -18,4 +18,7 @@ urlpatterns = [
     path('socials/', SocialsView.as_view(), name='social-accounts'),
     path('remove-social-auth/<int:account_id>/', remove_social_account, name='remove_social_account'),
 
+
+
+
 ]
