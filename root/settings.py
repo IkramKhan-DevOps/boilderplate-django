@@ -76,7 +76,7 @@ INSTALLED_APPS = [
 
     # mailchimp
     'mailchimp_transactional',
-    'notifications',
+    # 'notifications',
 ]
 # MAILCHIMP SETTINGS
 MAILCHIMP_API_KEY = env('MAILCHIMP_API_KEY')
@@ -207,7 +207,7 @@ DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
 """ ALL-AUTH SETUP --------------------------------------------------------------------------------"""
 ACCOUNT_LOGOUT_ON_GET = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_LOGIN_METHODS = ['email']
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False

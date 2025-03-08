@@ -25,7 +25,7 @@ urlpatterns += [
 urlpatterns += [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('inbox/notifications/', include('notifications.urls', namespace='notifications')),
+    # path('inbox/notifications/', include('notifications.urls', namespace='notifications')),
 
 ]
 
