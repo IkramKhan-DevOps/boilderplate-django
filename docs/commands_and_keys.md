@@ -58,7 +58,7 @@ git push
 ## MIGRATIONS
 make sure to follow this migrations order.
 1. core
-2. users
+2. accounts
 3. ...
 
 ## MISSING

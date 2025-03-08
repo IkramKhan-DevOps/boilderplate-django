@@ -1,7 +1,7 @@
 import django_filters
 from django.forms import TextInput
 
-from src.services.users.models import User
+from src.services.accounts.models import User
 
 
 class UserFilter(django_filters.FilterSet):

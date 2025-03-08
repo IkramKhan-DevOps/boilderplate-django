@@ -27,7 +27,7 @@ GOOGLE_CALLBACK_ADDRESS = f"{BASE_URL}/accounts/google/login/callback/"
 APPLE_CALLBACK_ADDRESS = f"{BASE_URL}/accounts/apple/login/callback/"
 
 ROOT_URLCONF = 'root.urls'
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'accounts.User'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -66,11 +66,10 @@ INSTALLED_APPS = [
 
     # YOUR APPS
     'src.core.apps.CoreConfig',
-    'src.services.users.apps.UsersConfig',
+    'src.services.accounts.apps.AccountsConfig',
 
     # WEB APPS
     'src.web.website',
-    'src.web.accounts',
     'src.web.admins',
     'src.apps.whisper.apps.WhisperConfig',
 
@@ -242,4 +241,4 @@ MFA_ADAPTER = "allauth.mfa.adapter.DefaultMFAAdapter"
 DEFAULT_FROM_EMAIL = 'exarth@info.com'  # Replace with the email address to appear in the 'from' field
 
 """  ACCOUNT ADAPTER Modify Login/Signup Redirect UR----------------------------------------------------"""
-ACCOUNT_ADAPTER = "src.web.accounts.adapters.MyAccountAdapter"
+ACCOUNT_ADAPTER = "src.services.accounts.adapters.MyAccountAdapter"

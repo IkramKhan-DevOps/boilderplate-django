@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from src.services.users.models import User
+from src.services.accounts.models import User
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

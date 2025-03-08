@@ -101,10 +101,10 @@ class UserCustomAdmin(admin.ModelAdmin):
 
     def _add_view(self, request, form_url='', extra_context=None):
         # It's an error for a user to have add permission but NOT change
-        # permission for users. If we allowed such users to add users, they
+        # permission for accounts. If we allowed such accounts to add accounts, they
         # could create superusers, which would mean they would essentially have
-        # the permission to change users. To avoid the problem entirely, we
-        # disallow users from adding users if they don't have change
+        # the permission to change accounts. To avoid the problem entirely, we
+        # disallow accounts from adding accounts if they don't have change
         # permission.
         if not self.has_change_permission(request):
             if self.has_add_permission(request) and settings.DEBUG:
@@ -112,7 +112,7 @@ class UserCustomAdmin(admin.ModelAdmin):
                 # error message.
                 raise Http404(
                     'Your user does not have the "Change user" permission. In '
-                    'order to add users, Django requires that your user '
+                    'order to add accounts, Django requires that your user '
                     'auth have both the "Add user" and "Change user" '
                     'permissions set.')
             raise PermissionDenied

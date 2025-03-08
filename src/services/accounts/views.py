@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django.contrib.auth import logout
-from src.web.accounts.forms import UserProfileForm
+from .forms import UserProfileForm
 
 
 @method_decorator(login_required, name='dispatch')

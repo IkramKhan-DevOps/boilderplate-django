@@ -11,8 +11,8 @@ from django.views.generic import (
 )
 
 # from faker_data import initialization
-from src.services.users.models import User
-from src.web.accounts.decorators import staff_required_decorator
+from src.services.accounts.models import User
+from src.services.accounts.decorators import staff_required_decorator
 from src.web.admins.filters import UserFilter
 
 

@@ -4859,7 +4859,7 @@ Map.include({
  * @aka L.Control.Layers
  * @inherits Control
  *
- * The layers control gives users the ability to switch between different base layers and switch overlays on/off (check out the [detailed example](http://leafletjs.com/examples/layers-control/)). Extends `Control`.
+ * The layers control gives accounts the ability to switch between different base layers and switch overlays on/off (check out the [detailed example](http://leafletjs.com/examples/layers-control/)). Extends `Control`.
  *
  * @example
  *
@@ -9712,7 +9712,7 @@ var Popup = DivOverlay.extend({
 		autoPanPadding: [5, 5],
 
 		// @option keepInView: Boolean = false
-		// Set it to `true` if you want to prevent users from panning the popup
+		// Set it to `true` if you want to prevent accounts from panning the popup
 		// off of the screen while it is open.
 		keepInView: false,
 
@@ -13452,7 +13452,7 @@ Map.addInitHook('addHandler', 'dragging', Drag);
 // @section Keyboard Navigation Options
 Map.mergeOptions({
 	// @option keyboard: Boolean = true
-	// Makes the map focusable and allows users to navigate the map with keyboard
+	// Makes the map focusable and allows accounts to navigate the map with keyboard
 	// arrows and `+`/`-` keys.
 	keyboard: true,
 

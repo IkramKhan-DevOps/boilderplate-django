@@ -59,7 +59,7 @@ cd cleaning-services
 
 ```bash
 pip install -r requirements.txt
-python manage.py makemigrations core users whisper
+python manage.py makemigrations core accounts whisper
 python manage.py migrate
 py manage.py runserver
 ```
