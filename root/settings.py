@@ -4,6 +4,7 @@ import environ
 
 """ APPLICATION CONFIGURATIONS """
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env(
     DEBUG=(bool, True)
@@ -168,7 +169,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 """ INTERNATIONALIZATION --------------------------------------------------------------------------------"""
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Asia/Tashkent'
+TIME_ZONE = env('TIME_ZONE')
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -236,17 +237,6 @@ SOCIALACCOUNT_PROVIDERS = {
 
 """ MFA SETUP --------------------------------------------------------------------------------"""
 MFA_ADAPTER = "allauth.mfa.adapter.DefaultMFAAdapter"
-
-""" GMAIL SMTP ---------------------------------------------------------------------------------"""
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# SMTP  configuration
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-
-EMAIL_HOST_USER = 'gwtw.mhn@gmail.com'
-EMAIL_HOST_PASSWORD = 'jyrq jbmd grlu vvzs'
 
 # Default from email address
 DEFAULT_FROM_EMAIL = 'exarth@info.com'  # Replace with the email address to appear in the 'from' field
