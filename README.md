@@ -101,8 +101,3 @@ Contributions are welcome! Feel free to open an issue or submit a pull request w
 ## License
 
 This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
-
-<h4>ALERT !</h4>
-<p>Application is developed by <a href="https://github.com/IkramKhan-DevOps/">MARK I</a> at <b><a href="https://exarth.com">Exarth</a></b>.
-<small style="color: indianred">( NDA protected )</small>
-</p>
