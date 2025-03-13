@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://exarth.com/">
-    <img src="https://exarth.com/static/exarth/theme/logo-red-1000.svg" height="150">
+    <img alt="screen" src="https://github.com/IkramKhan-DevOps/boilderplate-django/blob/main/docs/images/screen.png" height="auto" width="100%">
   </a>
 </p>
 <hr>
