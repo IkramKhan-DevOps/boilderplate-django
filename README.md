@@ -1,68 +1,106 @@
-<p>
+<p align="center">
   <a href="https://exarth.com/">
-  <img src="https://exarth.com/static/exarth/theme/logo-red-1000.svg" height="150">
+    <img src="https://exarth.com/static/exarth/theme/logo-red-1000.svg" height="150">
   </a>
 </p>
 <hr>
 
-# PROJECT NAME 😕
+# Django Boilerplate
 
-_application tagline here_
+Welcome to my Django Boilerplate – a comprehensive, reusable starting point for building professional-grade Django applications. This boilerplate is designed to save developers time by providing pre-built functionalities, essential features, reusable components, and configurations commonly required in modern web applications. Whether you're building a small prototype or a large-scale production app, this boilerplate has you covered.
 
-application detailed down description here
+## Table of Contents
+1. Applications
+2. Tools and Technologies
+3. Development Phases
+4. Modules
+5. Features
+6. How to Run
+7. Contributing
+8. License
 
-# Applications
+## Applications
+The boilerplate includes a variety of pre-designed applications to jumpstart your development:
 
 1. Website
 2. Administration
 3. Staff Management
 4. Root Administration
 
-# Tools and Technologies
-
+## Tools and Technologies
 
 | Category  | Tools and technologies                        |
 | --------- | --------------------------------------------- |
 | Frontend  | Html, Css, Javascript, JQuery, Ajax, Jinja    |
-| Backend   | Django, Django-Rest-Framework``               |
+| Backend   | Django, Django-Rest-Framework                 |
 | Databases | SQLite, PostGre                               |
 | Server    | Linux based ubuntu server (aws/digital ocean) |
 
-# Development Phases
+## Features
+The boilerplate comes with a range of features to help you build a robust Django app:
 
-1. [ ]  Application requirement engineering
-2. [ ]  Application design, theme and prototyping
-3. [ ]  Application core requirements implementation phase - 1 (core)
-4. [ ]  Application core requirements implementation phase - 2 (api and other external services)
-5. [ ]  Application core requirements implementation phase - 3 (integrations)
-6. [ ]  Application testing, optimization and security checks
-7. [ ]  Application Deployment
+### Authentication and Authorization
+- Includes AllAuth and RestAuth for robust authentication.
+- Multi-factor authentication (MFA) support.
+- Social logins (Google, Apple).
 
-# Modules
+### Notifications
+- Firebase push notifications.
+- Email notifications.
+- In-app notifications.
 
-1. [ ]  Authentication and Authorization
-2. [ ]  Access and Permission Control System
-3. [ ]  Notification Alerts and POP-ups
+### Forms and Filters
+- Crispy forms for enhanced form styling.
+- Advanced filtering capabilities.
 
----
+### Localization
+- Support for multiple languages and localization.
 
-# HOW TO RUN
+### Documentation
+- Integrated Swagger for API documentation.
 
-## install
+### Admin and Models
+- Pre-built Django required models.
+- Updated Django admin interface.
+- New admin portal for enhanced management.
+
+### APIs
+- Comprehensive API setup with Django Rest Framework.
+
+### Database
+- Configured to use PostgreSQL as the database.
+
+## How to Run
+
+### Install
 
 ```bash
-git clone git@github.com:IkramKhan-DevOps/cleaning-services.git
-cd cleaning-services
+git clone git@github.com:IkramKhan-DevOps/boilderplate-django.git
+cd boilderplate-django
 ```
 
-## initialize and run
+### Initialize and Run
 
 ```bash
 pip install -r requirements.txt
 python manage.py makemigrations core accounts whisper
 python manage.py migrate
-py manage.py runserver
+python manage.py runserver
 ```
+
+## Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request with improvements or bug fixes.
+
+1.  Fork the repository.
+2.  Create a new branch (git checkout -b feature/your-feature).
+3.  Commit your changes (git commit -m "Add your feature").
+4.  Push to the branch (git push origin feature/your-feature).
+5.  Open a pull request.
+
+## License
+
+This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
 
 <h4>ALERT !</h4>
 <p>Application is developed by <a href="https://github.com/IkramKhan-DevOps/">MARK I</a> at <b><a href="https://exarth.com">Exarth</a></b>.
