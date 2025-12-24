@@ -14,19 +14,17 @@ urlpatterns = []
 handler404 = handler404
 handler500 = handler500
 
-""" INTERNAL REQUIRED APPS ----------------------------------------------------------------------------------------- """
-urlpatterns += [
-    path('', include('src.web.urls')),
-    path('', include('src.api.urls')),
-    path('', include('src.apps.whisper.urls')),
-]
-
 """ EXTERNAL REQUIRED APPS ----------------------------------------------------------------------------------------- """
 urlpatterns += [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    # path('inbox/notifications/', include('notifications.urls', namespace='notifications')),
+]
 
+""" INTERNAL REQUIRED APPS ----------------------------------------------------------------------------------------- """
+urlpatterns += [
+    path('', include('src.web.website.urls')),
+    path('dashboard/', include('src.services.dashboard.urls', namespace='dashboard')),
+    path('accounts/', include('src.services.accounts.urls', namespace='accounts')),
 ]
 
 """ STATIC AND MEDIA FILES ----------------------------------------------------------------------------------------- """

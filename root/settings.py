@@ -67,11 +67,10 @@ INSTALLED_APPS = [
     # YOUR APPS
     'src.core.apps.CoreConfig',
     'src.services.accounts.apps.AccountsConfig',
+    'src.services.dashboard.apps.DashboardAppConfig',
 
     # WEB APPS
     'src.web.website',
-    'src.web.admins',
-    'src.apps.whisper.apps.WhisperConfig',
 
     # mailchimp
     'mailchimp_transactional',
