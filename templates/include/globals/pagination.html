@@ -1,0 +1,43 @@
+{% load core_tags %}
+
+<div class="card-footer">
+    <div class="row">
+    <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
+        <div class="text-muted">
+            Showing {{ object_list.start_index }} to {{ object_list.end_index }}
+            of {{ object_list.paginator.count }} entries
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+        <nav aria-label="pagination">
+            <ul class="pagination mb-0">
+
+                {% if object_list.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{% relative_url object_list.previous_page_number 'page' request.GET.urlencode %}"
+                           aria-label="Previous">
+                            <i class="mdi mdi-arrow-left"></i>
+                        </a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item active">
+                    <span class="page-link">Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}</span>
+                </li>
+
+                {% if object_list.has_next %}
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{% relative_url object_list.next_page_number 'page' request.GET.urlencode %}"
+                           aria-label="Next">
+                            <i class="mdi mdi-arrow-right"></i>
+                        </a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    </div>
+</div>
+</div>

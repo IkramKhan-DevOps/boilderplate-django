@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'account/base.html' %}
 
 {% load i18n %}
 {% load account socialaccount %}
@@ -6,130 +6,55 @@
 {% load socialaccount %}
 {% load crispy_forms_tags %}
 
-{% block subtitle %}Login Now{% endblock %}
+{% block subtitle %}Login{% endblock %}
 
 
-{% block only-body %}
+{% block content %}
 
-    {# HOME LINK #}
-    <div class="home-btn d-none d-sm-block">
-        <a href="/" class="text-dark"><i class="fas fa-home h2"></i></a>
-    </div>
+    <div class="card border-0 bg-grey mt-4 rounded-20">
 
-    <div class="account-pages my-5 pt-sm-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6 col-xl-5">
-                    <div class="card overflow-hidden">
-                        <div class="bg-soft-primary">
-                            <div class="row">
-                                <div class="col-7">
-                                    <div class="text-primary p-4">
-                                        <h5 class="text-primary">Welcome Back !</h5>
-                                        <p>Sign in to <b>Continue</b>.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div>
-                                <a href="">
-                                    <div class="avatar-md profile-user-wid mb-4">
-                                            <span class="avatar-title rounded-circle bg-light">
-                                                <img src="{% static 'core/images/logos/logo-dark.png' %}" alt=""
-                                                     class="rounded-circle"
-                                                     height="45">
-                                            </span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="p-2">
-                                {#                            <h1>{% trans "Sign In" %}</h1>#}
-                                {% get_providers as socialaccount_providers %}
+        <div class="card-body p-4">
+            <div class="text-center border-bottom">
+                <h3 class="shadow-text mb-4">Login Now</h3>
+            </div>
+            <div class="p-2 mt-3">
 
-                                {% if socialaccount_providers %}
-                                    <p class="">{% blocktrans with site.name as site_name %}Please sign in with one
-                                        of your existing third party accounts. Or,
-                                        <a href="{{ signup_url }}"><b>Sign Up</b></a>
-                                        for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+                <form class="login row" id="login_form" method="POST"
+                      action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    {{ form|crispy }}
 
-                                    {#                            <div class="socialaccount_ballot">#}
-                                    {##}
-                                    {#                                <ul class="socialaccount_providers">#}
-                                    {#                                    {% admin "socialaccount/snippets/provider_list.html" with process="login" %}#}
-                                    {#                                </ul>#}
-                                    {##}
-                                    {#                                <div class="login-or">{% trans '' %}</div>#}
-                                    {#                                <hr>#}
-                                    {##}
-                                    {#                            </div>#}
-                                    {##}
-                                    {#                            {% admin "socialaccount/snippets/login_extra.html" %}#}
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}"
+                               value="{{ redirect_field_value }}"/>
+                    {% endif %}
 
-                                {% else %}
-                                    <p>{% blocktrans %}If you have not created an account yet, then please
-                                        <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-                                {% endif %}
-
-                                <form class="login" id="login_form" method="POST" action="{% url 'account_login' %}">
-
-                                    {% csrf_token %}
-                                    {{ form|crispy }}
-                                    {% if redirect_field_value %}
-                                        <input type="hidden" name="{{ redirect_field_name }}"
-                                               value="{{ redirect_field_value }}"/>
-                                    {% endif %}
-
-                                    <div class="mt-3">
-                                        <button class="btn btn-success btn-block waves-effect waves-light"
-                                                type="submit">Log In
-                                        </button>
-                                    </div>
-                                </form>
-                                {% if socialaccount_providers %}
-                                    <hr>
-                                    <ul class="list-unstyled">
-                                        {% for provider in socialaccount_providers %}
-                                            {% if provider.id == "openid" %}
-                                                {% for brand in provider.get_brands %}
-                                                    <li class="mb-0">
-                                                        <a title="{{ brand.name }}"
-                                                           class="socialaccount_provider {{ provider.id }} {{ brand.id }}"
-                                                           href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"
-                                                        >{{ brand.name }}</a>
-                                                    </li>
-                                                {% endfor %}
-                                            {% endif %}
-                                            {% if forloop.counter == 1 %}
-                                                <li class="mb-2">
-                                                    <a class="btn btn-block btn-danger" title="{{ provider.name }}"
-                                                       class="socialaccount_provider {{ provider.id }}"
-                                                       href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{{ provider.name }}</a>
-                                                </li>
-                                            {% else %}
-                                                <li class="mb-2">
-                                                    <a class="btn btn-block btn-primary" title="{{ provider.name }}"
-                                                       class="socialaccount_provider {{ provider.id }}"
-                                                       href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{{ provider.name }}</a>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
-
-                                <div class="mt-4 text-center">
-                                    <a href="{% url 'account_reset_password' %}" class="text-muted"><i
-                                            class="mdi mdi-lock mr-1"></i> Forgot your password?</a>
-                                </div>
-                            </div>
-
-                        </div>
+                    <div class="col-12">
+                        <button class="btn rounded-pill btn-primary waves-effect waves-light w-100 btn-pd-10"
+                                type="submit">
+                            Sign In
+                        </button>
                     </div>
 
-                </div>
+                </form>
             </div>
         </div>
+        <!-- end card body -->
+    </div>
+
+    <div class="mt-4 text-center">
+        <p class="mb-0">
+            Forget password?
+            <a href="#" 
+               class="fw-semibold text-decoration-underline">
+                Please contact administration
+            </a>
+        </p>
     </div>
 
 {% endblock %}
+
+
+
+
 

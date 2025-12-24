@@ -1,0 +1,39 @@
+{% extends 'whisper/base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+        <td class="content-block"
+            style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; color: rgb(22,94,223); font-size: 24px; font-weight: 700; text-align: center; vertical-align: top; margin: 0; padding: 0 0 10px;"
+            valign="top">Welcome to GR1P
+        </td>
+    </tr>
+    <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+        <td class="content-block"
+            style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; color: #888; font-size: 14px; vertical-align: top; margin: 0; padding: 10px 10px;"
+            valign="top">Please confirm your email address by clicking the link below.
+        </td>
+    </tr>
+    <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+        <td class="content-block"
+            style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 10px 10px;"
+            valign="top">You're receiving this e-mail because user {{ user_display }} has given your
+            e-mail address to register an account on {{ site_domain }}.
+        </td>
+    </tr>
+    <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+        <td class="content-block"
+            style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; color: #888; font-size: 14px; vertical-align: top; margin: 0; padding: 10px 10px;"
+            valign="top"><a href="{{ activate_url }}">{{ activate_url }}</a>
+        </td>
+    </tr>
+    <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+        <td class="content-block" itemprop="handler" itemscope=""
+            itemtype="http://schema.org/HttpActionHandler"
+            style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 10px 10px;"
+            valign="top"><a href="{{ activate_url }}" itemprop="url"
+                            style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2em; font-weight: bold; text-align: center; cursor: pointer; display: block; border-radius: 5px; text-transform: capitalize; background-color: rgb(22,94,223); margin: 0; border-color: #165edf; border-style: solid; border-width: 10px 20px;">
+            Verify your account</a>
+        </td>
+    </tr>
+{% endblock %}

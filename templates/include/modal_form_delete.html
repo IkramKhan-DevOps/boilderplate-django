@@ -1,0 +1,36 @@
+{% load core_tags %}
+
+<div class="modal fade" id="{{ instance_model_name }}ModelFormDelete{{ instance_id }}" tabindex="-1" aria-labelledby="ModelFormDeleteLabel" aria-modal="true">
+    <div class="modal-dialog modal-dialog-centered mw-500px">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title" id="ModelFormDeleteLabel">Confirm Delete</h3>
+{#                <button type="button" class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">#}
+{#                    <i class="bx bx-window-close fs-1"><span class="path1"></span><span class="path2"></span></i>#}
+{#                </button>#}
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body text-center">
+                <lord-icon src="https://cdn.lordicon.com/tdrtiskw.json" trigger="loop"
+                           colors="primary:#f7b84b,secondary:#405189" style="width:130px;height:130px">
+                </lord-icon>
+                <p class="mt-4">Are you sure you want to permanently delete "<b>{{ instance|get_verbose_name }}</b>"?
+                    <br> {{ instance }}
+                </p>
+                <form method="post" action="{{ action_url }}" id="delete-form-{{ instance_id }}">
+                    {% csrf_token %}
+                    <div class="hstack gap-2 justify-content-center mt-4">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

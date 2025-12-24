@@ -1,10 +1,16 @@
-# Exarth Company Site - Corporate Website
+# Django Boilerplate
 
-> **CONFIDENTIAL** - This repository contains proprietary code for Exarth Corporation. Unauthorized distribution or use is prohibited.
+A production-ready Django boilerplate with authentication, REST API, and modern tooling.
 
-## About Exarth
+## ✨ Features
 
-EXARTH is a Software Development Corporation originated in Pakistan, which aims to bring the people with most incredible skill sets and ideas together to fulfill the needs of the 21st century. Here at Exarth, efforts are being made to make our tomorrow brighter than today - that's why we want each step of Exarth to be in the right direction.
+- 🔐 **Authentication**: django-allauth with social login (Google), MFA support
+- 🔄 **REST API**: Django REST Framework with dj-rest-auth
+- 📝 **Forms**: Crispy Forms with Bootstrap 5
+- 📧 **Email**: Mailchimp Transactional (Mandrill) integration
+- 📱 **Phone**: Phone number field support
+- 🔍 **Filtering**: Django Filter for querysets
+- 📖 **API Docs**: Swagger/OpenAPI via drf-yasg
 
 ---
 
@@ -23,7 +29,7 @@ EXARTH is a Software Development Corporation originated in Pakistan, which aims 
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd Exarth-Company-Site
+cd boilerplate-django
 
 # Run the setup script
 chmod +x docs/bash/setup.sh
@@ -35,7 +41,7 @@ chmod +x docs/bash/setup.sh
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd Exarth-Company-Site
+cd boilerplate-django
 
 # Create virtual environment
 python3 -m venv venv
@@ -51,7 +57,6 @@ pip install -r requirements.txt
 cp docs/configs/.env .env
 
 # Run migrations
-python manage.py makemigrations company projects resources services website
 python manage.py migrate
 
 # Collect static files
@@ -69,19 +74,18 @@ python manage.py runserver
 ## 📁 Project Structure
 
 ```
-Exarth-Company-Site/
+boilerplate-django/
 ├── root/                   # Django project settings
 │   ├── settings.py         # Main settings file
 │   ├── urls.py             # Root URL configuration
-│   ├── context_processor.py # Custom context processors
 │   └── wsgi.py             # WSGI configuration
 ├── src/                    # Application modules
-│   ├── services/           # Services submodules
-│   │   ├── company/        # Company information
-│   │   ├── projects/       # Projects portfolio
-│   │   ├── resources/      # Resources management
-│   │   └── services/       # Services offerings
-│   └── website/            # Public website
+│   ├── core/               # Core app (models, helpers, signals)
+│   ├── services/           # Backend services
+│   │   ├── accounts/       # User accounts & authentication
+│   │   └── dashboard/      # Dashboard functionality
+│   └── web/                # Frontend web apps
+│       └── website/        # Public website
 ├── templates/              # HTML templates
 ├── static/                 # Static assets (CSS, JS, images)
 ├── media/                  # User-uploaded files

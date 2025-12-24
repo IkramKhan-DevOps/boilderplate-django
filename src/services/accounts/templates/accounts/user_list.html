@@ -1,159 +1,86 @@
-{% extends 'base.html' %}
-{% load crispy_forms_tags %}
-{% load core_tags %}
+{% extends 'include/base/base_list.html' %}
 
-{% block subtitle %}
-    Users List
+{% block toolbar_actions %}
+    <a href="{% url 'accounts:user_create' %}" class="btn fw-bold btn-primary shadow-sm">
+        <i class="bx bx-plus"></i> Add New
+    </a>
 {% endblock %}
 
-{% block content %}
-
-    <div class="row">
-        <div class="col-12">
-            <form method="get">
-                <div class="input-group mb-3">
-                    {{ user_filter_form }}
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">
-                            <i class="fa fa-search"></i> Search
-                        </button>
+{% block sub_content %}
+    {% if object_list %}
+        <thead class="table-light">
+        <tr>
+            <th class="text-nowrap"><i class="bx bx-hash me-1"></i>ID</th>
+            <th class="text-nowrap"><i class="bx bx-user me-1"></i>Name</th>
+            <th class="text-nowrap"><i class="bx bx-envelope me-1"></i>Email</th>
+            <th class="text-nowrap"><i class="bx bx-phone me-1"></i>Phone</th>
+            <th class="text-nowrap"><i class="bx bx-briefcase me-1"></i>Type</th>
+            <th class="text-nowrap"><i class="bx bx-buildings me-1"></i>Platform</th>
+            <th class="text-nowrap text-center"><i class="bx bx-check-circle me-1"></i>Status</th>
+            <th class="text-nowrap text-center"><i class="bx bx-cog me-1"></i>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for obj in object_list %}
+            <tr>
+                <td class="fw-bold text-muted">#{{ obj.id }}</td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <div class="fw-semibold">{{ obj.get_full_name|default:obj.username }}</div>
+                            <small class="text-muted">@{{ obj.username }}</small>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-
-
-                    <div class="table-responsive">
-                        <table class="table table-borderless">
-                            {% if user_list %}
-                                <thead class="border-bottom">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>
-                                        Package
-                                    </th>
-                                    <th>Referred By</th>
-                                    <th>Active</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-
-                                {% for user in user_list %}
-                                    <tr>
-                                        <td>{{ user.pk }}</td>
-                                        <td>{{ user.first_name }} {{ user.last_name }}</td>
-                                        <td>{{ user.username }}</td>
-                                        <td>{{ user.email }}</td>
-                                        <td>
-                                            {% if not user.current_subscription %}
-                                                <b class="text-danger"><i class="fa fa-times-circle"></i> Free</b>
-                                            {% else %}
-                                                <b class="text-success">
-                                                    <i class="fa fa-check-circle"></i> {{ user.current_subscription.package.name }}
-                                                </b>
-                                            {% endif %}
-                                        </td>
-                                        <td>
-
-                                            {% if user.referred_by %}
-                                                <b>
-                                                    <a href="{% url 'admins:user-detail' user.referred_by.pk %}">
-                                                        {{ user.referred_by.username }}
-                                                    </a>
-                                                </b>
-                                            {% else %}
-                                                <b class="text-danger">
-                                                    None
-                                                </b>
-                                            {% endif %}
-
-                                        </td>
-                                        <td>
-                                            {% if user.is_active %}
-                                                <b class="text-success"><i class="fa fa-check-circle"></i></b>
-
-                                            {% else %}
-                                                <b class="text-danger"><i class="fa fa-times-circle"></i></b>
-
-                                            {% endif %}
-                                        </td>
-
-                                        <td>
-                                            <a href="{% url 'admins:user-detail' user.pk %}"
-                                               class="text-decoration-none"><i
-                                                    class="mdi mdi-eye icon-sm"></i> View
-                                            </a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-
-                                </tbody>
-                            {% else %}
-                                <th class="text-danger">No users data available.</th>
-                            {% endif %}
-                        </table>
+                </td>
+                <td>
+                    <a href="mailto:{{ obj.email }}" class="text-decoration-none">
+                        {{ obj.email }}
+                    </a>
+                </td>
+                <td>
+                    {% if obj.phone_number %}
+                        <a href="tel:{{ obj.phone_number }}" class="text-decoration-none">
+                            {{ obj.phone_number }}
+                        </a>
+                    {% else %}
+                        <span class="text-muted">—</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <span class="badge bg-light text-dark border">
+                        <i class="bx bx-briefcase me-1"></i>{{ obj.get_user_type_display }}
+                    </span>
+                </td>
+                <td>
+                    {% if obj.platform %}
+                        <span class="text-primary fw-semibold">{{ obj.platform }}</span>
+                    {% else %}
+                        <span class="text-muted">—</span>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {% if obj.is_active %}
+                        <span class="badge bg-success-subtle text-success">
+                            <i class="bx bx-check-circle me-1"></i>Active
+                        </span>
+                    {% else %}
+                        <span class="badge bg-danger-subtle text-danger">
+                            <i class="bx bx-x-circle me-1"></i>Inactive
+                        </span>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm" role="group">
+                        <a href="{% url 'accounts:user_detail' obj.pk %}"
+                           class="btn btn-light">
+                            <i class="bx bx-show"></i>
+                        </a>
                     </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="mt-4">
-                <ul class="pagination">
-                    {% if user_list.has_previous %}
-                        <li>
-                            <span>
-                                <a href="{% relative_url user_list.previous_page_number 'page' request.GET.urlencode %}">
-                                    Previous
-                                </a>
-                            </span>
-                        </li>
-                    {% endif %}
-                    <li class="">
-                        <span>Page {{ user_list.number }} of {{ user_list.paginator.num_pages }}.</span>
-                    </li>
-                    {% if user_list.has_next %}
-                        <li>
-                            <span>
-                                <a href="{% relative_url user_list.next_page_number 'page' request.GET.urlencode %}">
-                                    Next
-                                </a>
-                            </span>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </div>
-
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    {% else %}
+        {% include 'include/globals/data-not-found.html' %}
+    {% endif %}
 {% endblock %}
-
-{% block js_code %}
-    <script>
-        $(document).ready(function () {
-
-            $('label').hide();
-            $('input').addClass('form-control');
-            $('select').addClass('form-control');
-
-        });
-    </script>
-{% endblock %}
-
-

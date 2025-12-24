@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load static crispy_forms_tags core_tags widget_tweaks %}
+
+{% block subtitle %}
+    {% model_verbose_name view.model %} Delete
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid" id="kt_app_main">
+        <div class="d-flex flex-column">
+            <div class="mb-3">
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                    <div class="d-flex flex-column me-3">
+                        <h1 class="h3 fw-bold mb-0">
+                            {% model_app_name view.model %}
+                        </h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0 pt-1 text-muted">
+                                {% block breadcrumbs %}
+                                    <li class="breadcrumb-item">{% model_verbose_name view.model %}
+                                    </li>
+                                    {% if object %}
+                                        <li class="breadcrumb-item">{{ object }}</li>
+                                    {% endif %}
+                                    <li class="breadcrumb-item active">Delete</li>
+                                {% endblock %}
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        {% block toolbar_actions %}
+                            <a href="javascript:window.history.back();" class="btn fw-bold btn-primary shadow-sm">
+                                <i class="bx bx-arrow-back"></i> Back
+                            </a>
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-6">
+                    <div class="card h-100 shadow-sm border-danger">
+                        <div class="card-header border-bottom text-danger pt-4">
+                            <div class="d-flex flex-column">
+                                <span class="h5 mb-0 fw-bold text-danger">Delete {% model_verbose_name view.model %}</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="lead mb-0">
+                                Are you sure you want to delete the following object: <b>{{ object.id }}</b>, This
+                                action <strong>cannot be undone</strong>.
+                            </p>
+                        </div>
+                        <div class="card-body border-top">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="bx bx-trash"></i> Confirm Delete
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

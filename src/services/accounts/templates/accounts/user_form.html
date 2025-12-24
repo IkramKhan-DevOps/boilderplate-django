@@ -1,48 +1,28 @@
-{% extends 'base.html' %}
-{% load static %}
-{% load crispy_forms_tags %}
+{% extends 'include/base/base_create.html' %}
 
-{% block subtitle %}
-    Update {{ object.username }}
-{% endblock %}
+{% block js-code %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const phoneInput = document.getElementById('id_phone_number');
+            phoneInput.addEventListener('input', function (e) {
+                let numbers = this.value.replace(/\D/g, ''); // Remove all non-digits
+                if (numbers.length > 10) numbers = numbers.slice(0, 10); // Only 10 digits allowed
 
+                let formatted = '';
+                if (numbers.length > 0) {
+                    formatted += '(' + numbers.substring(0, 3);
+                }
+                if (numbers.length >= 4) {
+                    formatted += ') ' + numbers.substring(3, 6);
+                }
+                if (numbers.length >= 7) {
+                    formatted += '-' + numbers.substring(6, 10);
+                }
 
-{% block content %}
-
-    <div class="row">
-        <div class="col-sm-12">
-        <p><a href="{% url 'admins:user-detail' object.pk %}"><i class="fa fa-arrow-left"></i> Go Back</a></p>
-        </div>
-    </div>
-
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card p-4">
-                <div class="card-body">
-
-                    <div class="">
-                        {% if form.instance.profile_image %}
-                            <img class="rounded-circle" src="{{ form.instance.profile_image.url }}" height="150px" alt="user-image">
-                        {% else %}
-                            <img class="rounded-circle" src="{% static 'core/images/base/no-user.png' %}"
-                                 height="150px" alt="no-user-image">
-                        {% endif %}
-                    </div>
-
-                    <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-
-                        {{ form|crispy }}
-                        <div class="">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
+                this.value = formatted;
+            });
+        });
+    </script>
 {% endblock %}
 
 

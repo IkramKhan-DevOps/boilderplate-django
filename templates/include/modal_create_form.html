@@ -1,0 +1,26 @@
+{% load crispy_forms_tags %}
+{% load core_tags %}
+
+<div class="modal fade" id="CreateModelForm{{ model_class|get_model_name }}" tabindex="-1" aria-labelledby="createModalLabel{{ model_class|get_model_name }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLabel{{ model_class|get_model_name }}">Create {{ model_class|get_verbose_name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="modal-form-for{{ model_class|get_model_name }}" method="post" action="{{ action_url }}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="modal-errors alert alert-danger" style="display:none;"></div>
+                    {{ form|crispy }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="submit-button-for{{ model_class|get_model_name }}" class="btn btn-primary">
+                        <i class="bx bx-save"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

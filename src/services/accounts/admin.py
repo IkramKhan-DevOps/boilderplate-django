@@ -1,10 +1,3 @@
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.template.response import TemplateResponse
-from django.urls import reverse
-from django.utils.html import format_html
-from django.utils.http import urlencode
-
 from django.conf import settings
 from django.contrib import admin, messages
 from django.contrib.admin.options import IS_POPUP_VAR
@@ -13,7 +6,6 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm, UserChangeForm, UserCreationForm,
 )
-from django.contrib.auth.models import Group, User
 from django.core.exceptions import PermissionDenied
 from django.db import router, transaction
 from django.http import Http404, HttpResponseRedirect
@@ -25,35 +17,47 @@ from django.utils.translation import gettext, gettext_lazy as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 
-from .models import (
-    User
-)
+from .models import User, UserType
 
 
 csrf_protect_m = method_decorator(csrf_protect)
 sensitive_post_parameters_m = method_decorator(sensitive_post_parameters())
+
 
 class UserCustomAdmin(admin.ModelAdmin):
     add_form_template = 'admin/auth/user/add_form.html'
     change_user_password_template = None
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        ('Personal info', {'fields': ('profile_image', 'first_name', 'last_name', 'email', 'phone_number')}),
-        ('Permissions', {
-            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
+        ('Personal info', {
+            'fields': (
+                'profile_image', 'first_name', 'last_name',
+                'email', 'phone_number', 'description'
+            )
         }),
-        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+        ('Permissions', {
+            'fields': (
+                'user_type', 'is_active', 'is_staff',
+                'is_superuser', 'groups', 'user_permissions'
+            ),
+        }),
+        ('Important dates', {
+            'fields': (
+                'last_login', 'date_joined'
+            )
+        }),
     )
     filter_horizontal = ('groups', 'user_permissions',)
     list_display = [
-        'username', 'email', 'date_joined', 'is_superuser', 'is_staff', 'is_active'
+        'username', 'email', 'user_type', 'date_joined', 'is_superuser', 'is_staff', 'is_active'
     ]
     search_fields = [
         'username', 'first_name', 'last_name',
         'email'
     ]
     list_filter = [
-        'is_active', 'is_superuser', 'is_staff']
+        'user_type', 'is_active', 'is_superuser', 'is_staff'
+    ]
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -206,9 +210,10 @@ class UserCustomAdmin(admin.ModelAdmin):
         return super().response_add(request, obj, post_url_continue)
 
 
-# CUSTOM USER
+
+# Register User with custom admin
 admin.site.register(User, UserCustomAdmin)
 
-admin.site.site_header = "Root Access"
-admin.site.site_title = "APP"
-admin.site.index_title = "Dashboard"
+admin.site.site_header = "Root Administration"
+admin.site.site_title = "Root Admin"
+admin.site.index_title = "Root Management"

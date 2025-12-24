@@ -1,0 +1,97 @@
+{% extends 'include/base/base_list.html' %}
+{% load static crispy_forms_tags core_tags %}
+
+{% block toolbar_actions %}
+
+{% endblock %}
+
+{% block filter %}
+
+{% endblock %}
+
+{% block sub_content %}
+    <!-- Team Members Table -->
+    <div class="row">
+        <div class="col-12">
+            {% if object_list %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                        <tr>
+                            <th class="text-nowrap"><i class="bx bx-hash me-1"></i>ID</th>
+                            <th class="text-nowrap"><i class="bx bx-user me-1"></i>Name</th>
+                            <th class="text-nowrap"><i class="bx bx-envelope me-1"></i>Email</th>
+                            <th class="text-nowrap"><i class="bx bx-phone me-1"></i>Phone</th>
+                            <th class="text-nowrap"><i class="bx bx-buildings me-1"></i>Platform</th>
+                            <th class="text-nowrap text-center"><i class="bx bx-check-circle me-1"></i>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for member in object_list %}
+                            <tr>
+                                <td class="fw-bold text-muted">#{{ member.member.id }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        {% if member.member.profile_image %}
+                                            <img src="{{ member.member.profile_image.url }}" alt=""
+                                                 class="rounded-circle me-2" width="32" height="32">
+                                        {% else %}
+                                            <div class="avatar-xs me-2">
+                                                            <span class="avatar-title rounded-circle bg-soft-primary text-primary">
+                                                                {{ member.member.first_name|slice:":1"|upper }}{{ member.member.last_name|slice:":1"|upper }}
+                                                            </span>
+                                            </div>
+                                        {% endif %}
+                                        <div>
+                                            <div class="fw-semibold">{{ member.member.get_full_name|default:member.member.username }}</div>
+                                            <small class="text-muted">@{{ member.member.username }}</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="mailto:{{ member.member.email }}" class="text-decoration-none">
+                                        {{ member.member.email }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if member.member.phone_number %}
+                                        <a href="tel:{{ member.member.phone_number }}" class="text-decoration-none">
+                                            {{ member.member.phone_number }}
+                                        </a>
+                                    {% else %}
+                                        <span class="text-muted">—</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if member.member.platform %}
+                                        <span class="text-primary fw-semibold">{{ member.member.platform }}</span>
+                                    {% else %}
+                                        <span class="text-muted">—</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    {% if member.member.is_active %}
+                                        <span class="badge bg-success-subtle text-success">
+                                                        <i class="bx bx-check-circle me-1"></i>Active
+                                                    </span>
+                                    {% else %}
+                                        <span class="badge bg-danger-subtle text-danger">
+                                                        <i class="bx bx-x-circle me-1"></i>Inactive
+                                                    </span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                {% include 'include/globals/data-not-found.html' %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block pagination %}
+
+{% endblock %}

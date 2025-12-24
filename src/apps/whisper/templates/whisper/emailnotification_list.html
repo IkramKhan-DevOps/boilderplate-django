@@ -1,0 +1,308 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load core_tags %}
+{% load widget_tweaks %}
+{% load humanize %}
+
+{% block subtitle %}
+    Email Notifications
+{% endblock %}
+
+{% block content_head_title %}
+    Email Notifications
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid" id="kt_app_main">
+        <div class="d-flex flex-column">
+            <!-- Toolbar -->
+            <div class="mb-3">
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                    <div class="d-flex flex-column me-3">
+                        <h1 class="h3 fw-bold mb-0">
+                            Whisper
+                        </h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0 pt-1">
+                                <li class="breadcrumb-item">
+                                        Dashboard
+                                </li>
+                                <li class="breadcrumb-item text-muted">Email Notifications</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- End Toolbar -->
+
+            <!-- Filters -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light py-3">
+                    <form method="get" id="search-form" class="mb-0">
+                        <div class="row g-2 align-items-center">
+                            {% for field in filter_form %}
+                                <div class="col-md">
+                                    {{ field|add_class:"form-control" }}
+                                </div>
+                            {% endfor %}
+                            <div class="col-md-auto">
+                                <button class="btn btn-primary w-100" type="submit">
+                                    <i class="bx bx-search"></i> Search
+                                </button>
+                            </div>
+                            <div class="col-md-auto">
+                                <button type="button" id="clear-btn" class="btn btn-outline-danger w-100">
+                                    <i class="bx bx-brush"></i> Clear
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Email Notifications Table -->
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                            <tr>
+                                <th><i class="bx bx-envelope me-1"></i> Recipient</th>
+                                <th><i class="bx bx-text me-1"></i> Subject</th>
+                                <th><i class="bx bx-flag me-1"></i> Status</th>
+                                <th><i class="bx bx-error-circle me-1"></i> Resends</th>
+                                <th><i class="bx bx-file me-1"></i> Template</th>
+                                <th><i class="bx bx-calendar me-1"></i> Created</th>
+                                <th><i class="bx bx-dots-horizontal-rounded"></i></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for object in object_list %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px;">
+                                                <i class="bx bx-envelope text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <p class="mb-0 fw-semibold">{{ object.recipient|truncatechars:30 }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0" title="{{ object.subject }}">{{ object.subject|truncatechars:35 }}</p>
+                                    </td>
+                                    <td>
+                                        {% if object.status == 'sent' %}
+                                            <span class="badge bg-success-subtle text-success">
+                                                <i class="bx bx-check-circle me-1"></i> Sent
+                                            </span>
+                                        {% elif object.status == 'failed' %}
+                                            <span class="badge bg-danger-subtle text-danger">
+                                                <i class="bx bx-x-circle me-1"></i> Failed
+                                            </span>
+                                        {% elif object.status == 'pending' %}
+                                            <span class="badge bg-warning-subtle text-warning">
+                                                <i class="bx bx-time-five me-1"></i> Pending
+                                            </span>
+                                        {% elif object.status == 'retry' %}
+                                            <span class="badge bg-info-subtle text-info">
+                                                <i class="bx bx-refresh me-1"></i> Retry
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-secondary-subtle text-secondary">
+                                                {{ object.get_status_display }}
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if object.failed_attempts > 0 %}
+                                            <span class="badge bg-danger-subtle text-danger">
+                                                {{ object.failed_attempts }}
+                                            </span>
+                                        {% else %}
+                                            <span class="text-muted">0</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if object.template_name %}
+                                            <span class="badge bg-light text-dark">
+                                                <i class="bx bx-file me-1"></i>{{ object.template_name|truncatechars:20 }}
+                                            </span>
+                                        {% else %}
+                                            <span class="text-muted">-</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <span class="small">
+                                            {{ object.created_at|date:"M d, Y" }}
+                                        </span>
+                                        <p class="mb-0 small text-muted">
+                                            {{ object.created_at|time:"H:i" }}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex gap-1">
+                                            <!-- View Details -->
+                                            <button type="button" class="btn btn-sm btn-light"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#emailModal{{ object.id }}"
+                                                    title="View Details">
+                                                <i class="bx bx-show"></i>
+                                            </button>
+
+                                            <!-- Retry Button -->
+                                            {% if request.user.is_superuser or perms.whisper.change_emailnotification %}
+                                                {% if object.status == 'failed' or object.status == 'retry' %}
+                                                    <a href="{% url 'whisper:emailnotification-retry' object.pk %}"
+                                                       class="btn btn-sm btn-soft-warning" title="Retry">
+                                                        <i class="bx bx-refresh"></i>
+                                                    </a>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted">
+                                        <div class="text-center py-5">
+                                            <lord-icon src="https://cdn.lordicon.com/szqmhpux.json" trigger="loop"
+                                                       colors="primary:#405189,secondary:#0ab39c"
+                                                       style="width:120px;height:120px"></lord-icon>
+                                            <h5 class="mt-3">No Email Notifications Found</h5>
+                                            <p class="text-muted mb-0">There are no email notifications to display.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    {% include 'include/globals/pagination.html' %}
+
+                </div>
+                <!-- End card-body -->
+            </div>
+            <!-- End card -->
+        </div>
+    </div>
+
+    <!-- Detail Modals -->
+    {% for object in object_list %}
+        <div class="modal fade" id="emailModal{{ object.id }}" tabindex="-1" aria-labelledby="emailModalLabel{{ object.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom pb-4">
+                        <h5 class="modal-title" id="emailModalLabel{{ object.id }}">
+                            <i class="bx bx-envelope me-2"></i>Email Details
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <table class="table table-sm table-borderless mb-0">
+                                    <tr>
+                                        <td class="text-muted" style="width: 35%;">Recipient:</td>
+                                        <td class="fw-semibold">{{ object.recipient }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Status:</td>
+                                        <td>
+                                            {% if object.status == 'sent' %}
+                                                <span class="badge bg-success-subtle text-success">Sent</span>
+                                            {% elif object.status == 'failed' %}
+                                                <span class="badge bg-danger-subtle text-danger">Failed</span>
+                                            {% elif object.status == 'pending' %}
+                                                <span class="badge bg-warning-subtle text-warning">Pending</span>
+                                            {% elif object.status == 'retry' %}
+                                                <span class="badge bg-info-subtle text-info">Retry</span>
+                                            {% else %}
+                                                <span class="badge bg-secondary">{{ object.get_status_display }}</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Failed Attempts:</td>
+                                        <td>{{ object.failed_attempts }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-sm table-borderless mb-0">
+                                    <tr>
+                                        <td class="text-muted" style="width: 35%;">Template:</td>
+                                        <td>{{ object.template_name|default:"-" }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Created:</td>
+                                        <td>{{ object.created_at|date:"M d, Y H:i" }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Updated:</td>
+                                        <td>{{ object.updated_at|date:"M d, Y H:i" }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="mb-3">
+                            <label class="form-label text-muted fw-semibold">Subject</label>
+                            <div class="p-2 bg-light rounded">
+                                {{ object.subject }}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label text-muted fw-semibold">Body</label>
+                            <div class="p-3 bg-light rounded" style="max-height: 300px; overflow-y: auto;">
+                                {{ object.body|linebreaks }}
+                            </div>
+                        </div>
+
+                        {% if object.error_message %}
+                            <div class="mb-0">
+                                <label class="form-label text-danger fw-semibold">
+                                    <i class="bx bx-error-circle me-1"></i>Error Message
+                                </label>
+                                <div class="p-3 bg-danger bg-opacity-10 rounded text-danger">
+                                    {{ object.error_message }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        {% if request.user.is_superuser or perms.whisper.change_emailnotification %}
+                            {% if object.status == 'failed' or object.status == 'retry' %}
+                                <a href="{% url 'whisper:emailnotification-retry' object.pk %}" class="btn btn-warning">
+                                    <i class="bx bx-refresh me-1"></i> Retry
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <script>
+        // JavaScript to handle the clearing of the form
+        document.getElementById("clear-btn").addEventListener("click", function () {
+            var form = document.getElementById("search-form");
+            Array.from(form.elements).forEach(function (element) {
+                if (element.tagName === "INPUT" || element.tagName === "SELECT") {
+                    element.value = "";
+                }
+            });
+            form.submit();
+        });
+    </script>
+{% endblock %}

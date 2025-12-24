@@ -1,0 +1,39 @@
+{% extends 'account/base.html' %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block subtitle %}Login Now{% endblock %}
+
+
+{% block content %}
+    <div class="col-lg-6">
+        <div class="p-lg-5 p-4">
+            <div>
+                <h5 class="text-primary">Greetings from GR1P.ai!</h5>
+                <p class="text-muted">Download or Open app to continue further.</p>
+            </div>
+
+            <div class="mt-4">
+                <div class="col-12">
+                    <a href="https://play.google.com/store/apps/details?id=com.exarth.gr1pai.app">
+                        <div class="border border-success rounded text-center" type="submit">
+                            <h1 class="mb-0 text-success"><i class="mdi mdi-android" style="font-size: 30px;"></i></h1>
+                            <p class="text-success">Download From Playstore</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-2">
+                <div class="col-12">
+                    <a href="https://apps.apple.com/us/app/gr1p-ai/id6714458827">
+                        <div class="border border-white rounded text-center" type="submit">
+                            <h1 class="mb-0"><i class="mdi mdi-apple-ios" style="font-size: 30px;"></i></h1>
+                            <p>Download From Appstore</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

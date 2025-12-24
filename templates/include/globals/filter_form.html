@@ -1,0 +1,23 @@
+{% load widget_tweaks %}
+
+<div class="card-header mb-0" style="display:flow;">
+    <form method="get" id="search-form" class="mb-0">
+        <div class="row g-2">
+            {% for field in filter_form %}
+                <div class="col-md">
+                    {{ field|add_class:"form-control" }}
+                </div>
+            {% endfor %}
+            <div class="col-md-auto">
+                <button class="btn btn-primary w-100" type="submit">
+                    <i class="fa fa-search"></i> Search
+                </button>
+            </div>
+            <div class="col-md-auto">
+                <button type="button" id="clear-btn" class="btn btn-danger w-100">
+                    <i class="fa fa-brush"></i> Clear
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

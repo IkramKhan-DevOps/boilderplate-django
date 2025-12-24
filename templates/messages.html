@@ -1,41 +1,51 @@
+
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 <script>
-    $(document).ready(function () {
-        {% if messages %}
-            {% for message in messages %}
-                Toastify({
-                    text: "{{ message }}",
-                    className: "{{ message.tags }}",
-                    gravity: "top", // `top` or `bottom`
-                    position: "center", // `left`, `center` or `right`
-                    stopOnFocus: true,
-                    duration: 10000,
-                    close: true,
-                    style: {
-                        background: get_message_color('{{ message.tags }}'),
-                    }
-                }).showToast();
-            {% endfor %}
-        {% endif %}
+    {% if messages %}
+        {% for message in messages %}
+            Toastify({
+                text: "{{ message }}",
+                className: "{{ message.tags }}",
+                gravity: "top", // `top` or `bottom`
+                position: "center", // `left`, `center` or `right`
+                stopOnFocus: true,
+                duration: 10000,
+                close: true,
+                style: {
+                    background: get_message_color('{{ message.tags }}'),
+                }
+            }).showToast();
+        {% endfor %}
+    {% endif %}
 
-        function toast_message() {
-
-        }
-
-        function get_message_color(value) {
-            if (value === 'info') {
-                return "#337ab7";
-            } else if (value === 'warning') {
-                return "#8a6d3b";
-            } else if (value === 'error') {
-                return "#a94442";
-            } else if (value === 'success') {
-                return "#3c763d";
-            } else {
-                return "#31708f";
+    function toast_message(message, message_tags) {
+        Toastify({
+            text: message,
+            className: message_tags,
+            gravity: "top", // `top` or `bottom`
+            position: "center", // `left`, `center` or `right`
+            stopOnFocus: true,
+            duration: 10000,
+            close: true,
+            style: {
+                background: get_message_color(message_tags.toString()),
             }
+        }).showToast();
+    }
+
+    function get_message_color(value) {
+        if (value === 'info') {
+            return "#337ab7";
+        } else if (value === 'warning') {
+            return "#8a6d3b";
+        } else if (value === 'error') {
+            return "#a94442";
+        } else if (value === 'success') {
+            return "#3c763d";
+        } else {
+            return "#31708f";
         }
-    });
+    }
 </script>

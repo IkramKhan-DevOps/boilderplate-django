@@ -2,25 +2,74 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 from phonenumber_field.modelfields import PhoneNumberField
+import re
+from django.core.exceptions import ValidationError
+
+def phone_number_validator(value):
+    pattern = r'^\(\d{3}\) \d{3}-\d{4}$'
+    if not re.match(pattern, value):
+        raise ValidationError('Phone number must be in the format (xxx) xxx-xxxx')
+
+def phone_number_null_or_validator(value):
+    if value is None or value == '':
+        return
+    pattern = r'^\(\d{3}\) \d{3}-\d{4}$'
+    if not re.match(pattern, value):
+        raise ValidationError('Phone number must be in the format (xxx) xxx-xxxx')
+
+def validate_us_zip_code(value):
+    """
+    Validates that the value is a valid US ZIP code:
+    - 5 digits (e.g., 12345)
+    - or ZIP+4 format (e.g., 12345-6789)
+    """
+    if value is None or value == '':
+        return
+    zip_regex = re.compile(r'^\d{5}(-\d{4})?$')
+    if not zip_regex.match(value):
+        raise ValidationError("Enter a valid US ZIP code (e.g., 12345 or 12345-6789).")
+
+def phone_extension_validator(value):
+    """
+    Validates that a phone extension is 2-6 digits (optional field).
+    """
+    if value in [None, '']:
+        return
+    if not re.match(r'^\d{2,6}$', value):
+        raise ValidationError("Enter a valid phone extension (2-6 digits).")
 
 
-class Country(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    short_name = models.CharField(max_length=2, unique=True, help_text='ISO 3166-1 alpha-2')
-    language = models.CharField(max_length=3, default='en', help_text='ISO 639-1', null=True, blank=True)
-    currency = models.CharField(max_length=3, default='USD', help_text='ISO 4217', null=True, blank=True)
-    phone_code = models.CharField(max_length=4, default='+1', help_text='e.g. +1', null=True, blank=True)
+""" PLATFORMS """
 
-    is_services_available = models.BooleanField(default=True)
-    is_active = models.BooleanField(default=True)
-    created_on = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        ordering = ['name']
-        verbose_name_plural = 'Countries'
+def domain_validator(value):
 
-    def __str__(self):
-        return self.name
+    if value in ['127.0.0.1:8000', '127.0.0.1:8080']:
+        return
+
+    if not isinstance(value, str):
+        raise ValidationError('Domain must be a string.')
+    value = value.strip()
+    if value.startswith('http://') or value.startswith('https://'):
+        raise ValidationError('Domain should not include protocol (http:// or https://).')
+    if '/' in value:
+        raise ValidationError('Domain should not contain any path or trailing slash.')
+    if ':' in value:
+        raise ValidationError('Domain should not include port numbers.')
+
+    # Basic domain regex (does not cover all cases, but blocks obvious mistakes)
+    if not re.match(r'^(?=.{1,253}$)(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.[A-Za-z]{2,})+$', value):
+        raise ValidationError('Enter a valid domain name.')
+
+
+def protocol_validator(value):
+    if not isinstance(value, str):
+        raise ValidationError('Protocol must be a string.')
+    value = value.lower()
+    if value not in ['http', 'https']:
+        raise ValidationError('Protocol must be either "http" or "https".')
+
+
 
 
 class Application(models.Model):
@@ -86,5 +135,6 @@ class Application(models.Model):
         if Application.objects.exists() and not self.pk:
             raise ValidationError("Only one record allowed.")
         super(Application, self).save(*args, **kwargs)
+
 
 

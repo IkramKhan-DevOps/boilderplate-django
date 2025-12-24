@@ -1,0 +1,64 @@
+{% load i18n %}
+{% load core_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block subject %}{{ _("Notification") }}{% endblock %}</title>
+</head>
+<body style="background: #f9fafd; color: #3f3f3f; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background: #f9fafd; width: 100%; margin: 0; border: none;">
+        <tr>
+            <td></td>
+            <td width="600" style="max-width: 480px; margin: 40px auto; display: block;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(22,94,223,0.08); width: 100%; border: none;">
+                    <!-- HEADER -->
+                    {% block header %}
+                    <tr>
+                        <td style="text-align:center; padding: 32px 32px 0 32px;">
+                            {% if app.logo %}
+                            	<img src="{{ app.logo.url }}" alt="Logo" height="50" width="50" style="margin-bottom: 10px;">
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endblock %}
+
+                    <!-- CONTENT SLOT -->
+                    <tr>
+                        <td style="padding: 0 32px;">
+                            {% block content %}
+                            <!-- The child template's content goes here -->
+                            {% endblock %}
+                        </td>
+                    </tr>
+
+                    <!-- FOOTER -->
+                    {% block footer %}
+                    <tr>
+                        <td style="text-align:center; padding: 24px 32px 32px 32px; color: #6b7a99; font-size: 0.93rem;">
+                            <hr style="border: none; border-top: 1px solid #e2e8f0; margin-bottom: 18px;">
+                            <div>
+                                <a style="color: #165edf; text-decoration: none; font-weight: 500;"
+                                   href="mailto:{{ app.contact_email1 }}">
+                                    Support
+                                </a>
+                                &nbsp;|&nbsp;
+                                <a style="color: #165edf; text-decoration: none; font-weight: 500;"
+                                   href="{{ app.base_url }}">
+                                    {{ app.name }}
+                                </a>
+                            </div>
+                            <div style="margin-top: 10px; color: #a0aec0; font-size: 0.85rem;">
+                                &copy; {{ now.year }} {{ app.name }}. All rights reserved.
+                            </div>
+                        </td>
+                    </tr>
+                    {% endblock %}
+                </table>
+            </td>
+            <td></td>
+        </tr>
+    </table>
+</body>
+</html>

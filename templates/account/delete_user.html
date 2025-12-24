@@ -1,0 +1,35 @@
+{% extends 'account/base.html' %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block subtitle %}Delete Account{% endblock %}
+
+
+{% block content %}
+    <div class="col-lg-6">
+        <div class="p-lg-5 p-4">
+            <div>
+                <h5 class="text-primary">Delete Account !</h5>
+                <p class="text-muted">Delete now to Remove Your account</p>
+            </div>
+
+            <div class="mt-4">
+
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="col-12">
+                        <button class="btn btn-primary w-100" type="submit">Delete Now</button>
+                    </div>
+                </form>
+
+            </div>
+           <div class="mt-4 text-center">
+                            <p class="mb-0">I Want to Deactivate My Account? <a href="{% url 'accounts:deactivate-account'  %}"
+                                                                         class="fw-semibold text-primary text-decoration-underline">Deactivate </a></p>
+             </div>
+        </div>
+    </div>
+{% endblock %}
+
+

@@ -1,6 +1,6 @@
 #!/bin/bash
 # =============================================================================
-# EXARTH COMPANY SITE - Requirements Installation Script
+# DJANGO BOILERPLATE - Requirements Installation Script
 # =============================================================================
 # Description: Install/update all Python dependencies
 # Usage: ./docs/bash/requirements.sh (from any directory)

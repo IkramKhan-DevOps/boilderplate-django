@@ -1,118 +1,55 @@
-{% extends 'base.html' %}
+{% extends 'account/base.html' %}
 
 {% load i18n %}
-{% load crispy_forms_tags %}
-{% load static %}
 {% load account socialaccount %}
+{% load static %}
 {% load socialaccount %}
+{% load crispy_forms_tags %}
 
-{% block subtitle %}Sign Up{% endblock %}
-
-
-{% block only-body %}
-
-    <div class="home-btn d-none d-sm-block">
-        <a href="/" class="text-dark">
-            <i class="fas fa-home h2"></i>
-        </a>
-    </div>
-
-    <div class="account-pages my-5 pt-sm-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6 col-xl-5">
-                    <div class="card overflow-hidden">
-                        <div class="bg-soft-primary">
-                            <div class="row">
-                                <div class="col-7">
-                                    <div class="text-primary p-4">
-                                        <h5 class="text-primary">Free Register</h5>
-                                        <p>Get your free account now.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div>
-                                <a href="/">
-                                    <div class="avatar-md profile-user-wid mb-4">
-                                            <span class="avatar-title rounded-circle bg-light">
-                                                <img src="{% static 'core/images/logos/logo-red.png' %}"
-                                                     alt="" class="rounded-circle" height="45">
-                                            </span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="p-2">
-                                <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-                                    {% csrf_token %}
-                                    <h1>{% trans "Sign Up" %}</h1>
-
-                                    <p>{% blocktrans %}Already have an account? Then please
-                                        <a href="{{ login_url }}"><b>sign in</b></a>
-                                        .{% endblocktrans %}</p>
+{% block subtitle %}Registration{% endblock %}
 
 
-                                    {{ form | crispy }}
-                                    {% if redirect_field_value %}
-                                        <input type="hidden" name="{{ redirect_field_name }}"
-                                               value="{{ redirect_field_value }}"/>
-                                    {% endif %}
+{% block content %}
 
-                                    <div class="mt-4">
-                                        <button class="btn btn-success btn-block waves-effect waves-light"
-                                                type="submit">Register
-                                        </button>
-                                    </div>
+    <div class="card border-0 bg-grey mt-4 rounded-20">
 
-                                </form>
+        <div class="card-body p-4">
+            <div class="text-center border-bottom">
+                <h3 class="shadow-text mb-4">Registration</h3>
+            </div>
+            <div class="p-2 mt-3">
 
-                                {% get_providers as socialaccount_providers %}
-                                {% if socialaccount_providers %}
-                                    <hr>
-                                    <ul class="list-unstyled">
-                                        {% for provider in socialaccount_providers %}
-                                            {% if provider.id == "openid" %}
-                                                {% for brand in provider.get_brands %}
-                                                    <li>
-                                                        <a title="{{ brand.name }}"
-                                                           class="socialaccount_provider {{ provider.id }} {{ brand.id }}"
-                                                           href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"
-                                                        >{{ brand.name }}</a>
-                                                    </li>
-                                                {% endfor %}
-                                            {% endif %}
-                                            {% if forloop.counter == 1 %}
-                                                <li class="mb-2">
-                                                    <a class="btn btn-block btn-danger" title="{{ provider.name }}"
-                                                       class="socialaccount_provider {{ provider.id }}"
-                                                       href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{{ provider.name }}</a>
-                                                </li>
-                                            {% else %}
-                                                <li class="mb-2">
-                                                    <a class="btn btn-block btn-primary" title="{{ provider.name }}"
-                                                       class="socialaccount_provider {{ provider.id }}"
-                                                       href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{{ provider.name }}</a>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
+                <form class="login row" id="login_form" method="POST"
+                      action="{% url 'account_signup' %}">
+                    {% csrf_token %}
+                    {{ form|crispy }}
 
-                                <div class="mt-4 text-center">
-                                    <p class="mb-0">By registering you agree to the <a href="#"
-                                                                                       class="text-primary">Terms
-                                        of Use</a></p>
-                                </div>
-                            </div>
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}"
+                               value="{{ redirect_field_value }}"/>
+                    {% endif %}
 
-                        </div>
+                    <div class="col-12">
+                        <button class="btn rounded-pill btn-primary waves-effect waves-light w-100 btn-pd-10"
+                                type="submit">
+                            Register
+                        </button>
                     </div>
 
-                </div>
+                </form>
             </div>
         </div>
+        <!-- end card body -->
     </div>
+
+    <div class="mt-4 text-center">
+        <p class="mb-0">
+            Already have an account?
+            <a href="{% url 'account_signup' %}"
+               class="fw-semibold text-decoration-underline">
+                Login
+            </a>
+        </p>
+    </div>
+
 {% endblock %}
-
-

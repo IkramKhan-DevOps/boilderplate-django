@@ -1,6 +1,6 @@
 #!/bin/bash
 # =============================================================================
-# EXARTH COMPANY SITE - Clean Migrations Script
+# DJANGO BOILERPLATE - Clean Migrations Script
 # =============================================================================
 # Description: Remove all migration files (except __init__.py) for fresh start
 # Usage: ./docs/bash/migrations_clean.sh (from any directory)
@@ -32,39 +32,12 @@ fi
 
 echo ""
 
-# Clean migrations for each app
-# Note: services apps are in src/services/, website is in src/website/
-SERVICES_APPS=("company" "projects" "resources" "services")
-
-for app in "${SERVICES_APPS[@]}"; do
-    MIGRATION_DIR="src/services/$app/migrations"
-    if [ -d "$MIGRATION_DIR" ]; then
-        echo "🧹 Cleaning migrations for $app..."
-        find "$MIGRATION_DIR" -type f -name "*.py" ! -name "__init__.py" -delete
-        find "$MIGRATION_DIR" -type f -name "*.pyc" -delete
-        # Clean __pycache__ inside migrations
-        if [ -d "$MIGRATION_DIR/__pycache__" ]; then
-            rm -rf "$MIGRATION_DIR/__pycache__"
-        fi
-        echo "   ✅ Cleaned $app migrations"
-    else
-        echo "   ⏭️  No migrations folder for $app"
-    fi
-done
-
-# Clean website app (different path)
-MIGRATION_DIR="src/website/migrations"
-if [ -d "$MIGRATION_DIR" ]; then
-    echo "🧹 Cleaning migrations for website..."
-    find "$MIGRATION_DIR" -type f -name "*.py" ! -name "__init__.py" -delete
-    find "$MIGRATION_DIR" -type f -name "*.pyc" -delete
-    if [ -d "$MIGRATION_DIR/__pycache__" ]; then
-        rm -rf "$MIGRATION_DIR/__pycache__"
-    fi
-    echo "   ✅ Cleaned website migrations"
-else
-    echo "   ⏭️  No migrations folder for website"
-fi
+# Find and clean all migrations in src directory
+echo "🧹 Cleaning all migrations in src/..."
+find "$PROJECT_ROOT/src" -path "*/migrations/*.py" -not -name "__init__.py" -delete 2>/dev/null || true
+find "$PROJECT_ROOT/src" -path "*/migrations/*.pyc" -delete 2>/dev/null || true
+find "$PROJECT_ROOT/src" -path "*/migrations/__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+echo "   ✅ Cleaned all migrations"
 
 # Optionally remove database
 echo ""

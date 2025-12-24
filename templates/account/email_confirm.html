@@ -1,62 +1,63 @@
-{% extends 'base.html' %}
-
+{% extends 'account/base.html' %}
 {% load i18n %}
-{% load account %}
+{% load account socialaccount %}
 {% load static %}
+{% load socialaccount %}
+{% load crispy_forms_tags %}
 
-{% block title %}
-    Confirm Email
-{% endblock %}
+{% block subtitle %}{% trans "Confirm E-mail Address" %}{% endblock %}
 
 
-{% block head_title %}{% trans "Confirm E-mail Address" %}{% endblock %}
+{% block content %}
+    <div class="card border-0 bg-grey mt-4 rounded-20">
 
-{% block base_top_nav %} {% endblock %}
-{% block dont_include_details %}
-
-    {% include 'messages.html' %}
-
-    <div class="container my-4">
-
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6 col-xl-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h1>{% trans "Confirm E-mail Address" %}</h1>
-
-                        {% if confirmation %}
-
-                            {% user_display confirmation.email_address.user as user_display %}
-
-                            <p>{% blocktrans with confirmation.email_address.email as email %}Please confirm that
-                                <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user
-                                {{ user_display }}
-                                .{% endblocktrans %}</p>
-
-                            <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
-                                {% csrf_token %}
-                                <button class="btn btn-primary" type="submit"><i
-                                        class="fa fa-check"></i> {% trans 'Confirm' %}
-                                </button>
-                            </form>
-
-                        {% else %}
-
-                            {% url 'account_email' as email_url %}
-
-                            <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please
-                                <a href="{{ email_url }}">issue a new e-mail confirmation request</a>
-                                .{% endblocktrans %}
-                            </p>
-
-                        {% endif %}
-                    </div>
-                </div>
+        <div class="card-body p-4">
+            <div class="text-center border-bottom">
+                <h3 class="shadow-text mb-4">Registration</h3>
             </div>
+
+            <div class="p-2 mt-3">
+                {% if confirmation %}
+
+                    {% user_display confirmation.email_address.user as user_display %}
+
+                    <p>{% blocktrans with confirmation.email_address.email as email %}Please confirm
+                        that
+                        <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user
+                        {{ user_display }}
+                        .{% endblocktrans %}</p>
+
+                    <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                        {% csrf_token %}
+                        <button class="btn rounded-pill btn-primary waves-effect waves-light w-100 btn-pd-10" type="submit"><i
+                                class="fa fa-check"></i> {% trans 'Confirm' %}
+                        </button>
+                    </form>
+
+                {% else %}
+
+                    {% url 'account_email' as email_url %}
+
+                    <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please
+                        <a href="{{ email_url }}" class="text-primary">issue a new e-mail confirmation request</a>
+                        .{% endblocktrans %}
+                    </p>
+
+                {% endif %}
+            </div>
+
         </div>
+    </div>
 
-        {% include 'include/global-short-footer.html' %}
-
+    <div class="mt-4 text-center">
+        <p class="mb-0">
+            Let's get back to ?
+            <a href="{% url 'account_login' %}"
+               class="fw-semibold text-decoration-underline">
+                Login
+            </a>
+        </p>
     </div>
 
 {% endblock %}
+

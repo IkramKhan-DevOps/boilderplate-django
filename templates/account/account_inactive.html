@@ -1,26 +1,31 @@
-{% extends 'base.html' %}
-
+{% extends 'account/base.html' %}
 {% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block subtitle %}Login Now{% endblock %}
 
-{% block head_title %}{% trans "Account Inactive" %}{% endblock %}
 
-{% block dont_include_details %}
+{% block content %}
+<div class="col-lg-6">
+    <div class="p-lg-5 p-4">
 
-    <div class="account-pages my-5 pt-sm-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6 col-xl-6">
-                    <div class="card shadow">
-
-                        <h1>{% trans "Account Inactive" %}</h1>
-                        <p>{% trans "This auth is inactive." %}</p>
-
-                    </div>
-                </div>
-            </div>
-
-            {% include 'include/global-short-footer.html' %}
-
+        <div class="mb-4 mt-0">
+            <h3 class="text-primary">Account Inactive</h3>
         </div>
+
+
+        <div class="mt-4">
+            <p>The Account from which you are trying to Authenticate is currently Inactive SO You cannot Login, If
+                You Want to reactivate your account kindly contact us </p>
+        </div>
+
     </div>
+    <div class="mt-4 text-center">
+        <p class="mb-0"><a href="{% url 'website:contact'  %}"
+                           class="fw-semibold text-primary text-decoration-underline">
+            Contact us</a>
+    </div>
+</div>
 {% endblock %}
+
+

@@ -1,10 +1,10 @@
 #!/bin/bash
 # =============================================================================
-# EXARTH COMPANY SITE - Create Superuser Script
+# DJANGO BOILERPLATE - Create Superuser Script
 # =============================================================================
 # Description: Create Django admin superuser
 # Usage: ./docs/bash/superuser.sh (from any directory)
-# Default credentials: email: mark@exarth.com, username: mark, password: mark
+# Default credentials: email: admin@example.com, username: admin, password: admin
 # =============================================================================
 
 set -e  # Exit on error
@@ -32,9 +32,9 @@ echo ""
 
 # Check if user wants to use default or custom credentials
 echo "Default credentials:"
-echo "  Email: mark@exarth.com"
-echo "  Username: mark"
-echo "  Password: mark"
+echo "  Email: admin@example.com"
+echo "  Username: admin"
+echo "  Password: admin"
 echo ""
 read -p "Use default credentials? (Y/n): " use_default
 
@@ -50,11 +50,11 @@ else
     python manage.py shell << EOF
 from django.contrib.auth import get_user_model
 User = get_user_model()
-if not User.objects.filter(email='mark@exarth.com').exists():
+if not User.objects.filter(email='admin@example.com').exists():
     User.objects.create_superuser(
-        email='mark@exarth.com',
-        username='mark',
-        password='mark'
+        email='admin@example.com',
+        username='admin',
+        password='admin'
     )
     print('   ✅ Superuser created successfully!')
 else:

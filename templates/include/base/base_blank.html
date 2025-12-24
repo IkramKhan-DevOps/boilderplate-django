@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block subtitle %}Welcome to {{ app.name }}{% endblock %}
+
+{% block css_down %}
+    <style>
+        .auth-bg-cover {
+            z-index: 1;
+            background: radial-gradient(
+                    100% 150% at 50% 0%,
+                    #FFFFFF 0%,
+                    #FEFFFF 8.07%,
+                    #FAFEFF 15.54%,
+                    #F4FCFF 22.5%,
+                    #EDFAFE 29.04%,
+                    #E3F7FE 35.26%,
+                    #D7F4FD 41.25%,
+                    #C9F0FD 47.1%,
+                    #B9ECFC 52.9%,
+                    #A8E8FB 58.75%,
+                    #96E3FA 64.74%,
+                    #82DDF9 70.96%,
+                    #6CD7F8 77.5%,
+                    #56D1F7 84.46%,
+                    #3ECBF6 91.93%,
+                    #25C4F5 100%
+            )
+        }
+    </style>
+{% endblock %}
+
+{% block only-body %}
+
+    <div class="auth-page-wrapper auth-bg-cover py-5 d-flex
+    justify-content-center align-items-center min-vh-100">
+
+        <div class="bg-overlay"></div>
+
+        {% if request.user.is_authenticated %}
+            {% include 'include/globals/logout-button.html' %}
+        {% endif %}
+
+        <div class="auth-page-content overflow-hidden pt-lg-5 pt-5">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </div>
+
+{% endblock %}
+

@@ -1,8 +1,8 @@
 #!/bin/bash
 # =============================================================================
-# EXARTH COMPANY SITE - Migrations Script
+# DJANGO BOILERPLATE - Migrations Script
 # =============================================================================
-# Description: Run migrations for all apps in sequence
+# Description: Run migrations for all apps
 # Usage: ./docs/bash/migrations.sh (from any directory)
 # =============================================================================
 
@@ -29,21 +29,9 @@ echo "   RUNNING MIGRATIONS"
 echo "=========================================="
 echo ""
 
-# Make migrations for each app in sequence
-echo "🔧 Making migrations for company..."
-python manage.py makemigrations company
-
-echo "🔧 Making migrations for projects..."
-python manage.py makemigrations projects
-
-echo "🔧 Making migrations for resources..."
-python manage.py makemigrations resources
-
-echo "🔧 Making migrations for services..."
-python manage.py makemigrations services
-
-echo "🔧 Making migrations for website..."
-python manage.py makemigrations website
+# Make migrations for all apps
+echo "🔧 Making migrations..."
+python manage.py makemigrations
 
 echo ""
 echo "🔧 Applying all migrations..."

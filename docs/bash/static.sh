@@ -1,6 +1,6 @@
 #!/bin/bash
 # =============================================================================
-# EXARTH COMPANY SITE - Static Files Collection Script
+# DJANGO BOILERPLATE - Static Files Collection Script
 # =============================================================================
 # Description: Collect all static files for production
 # Usage: ./docs/bash/static.sh (from any directory)

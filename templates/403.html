@@ -1,0 +1,93 @@
+{% load static %}
+<html>
+<head>
+    <title>403 | Permission Denied</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Fira+Mono:wght@500&display=swap');
+
+        body {
+            height: 95vh;
+            background: indigo;
+            text-align: center;
+            color: #E0E0E0;
+            font-family: 'Fira Mono', monospace;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-family: 'Permanent Marker', cursive;
+        }
+
+        div {
+            transform-style: preserve-3d;
+        }
+
+        svg {
+            width: clamp(300px, 70%, 600px);
+            height: 500px;
+
+        }
+
+        #rocket {
+
+            transform: translateY(750px);
+
+            animation: launch 2s ease-out forwards;
+        }
+
+        @keyframes launch {
+            from {
+                transform: translateY(750px);
+            }
+            to {
+                perspective: 500px;
+                transform: translateY(0px);
+            }
+        }
+
+        #stars {
+            animation: twinkling 2s linear;
+        }
+
+        @keyframes twinkling {
+
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .text {
+            opacity: 0;
+            animation: appear 1s ease-in forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        a {
+            color: #F66947;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <img src="{% static 'core/images/error.png' %}" width="700" height="500" alt="error-img">
+</div>
+<div class="text">
+    <h1>403 Error</h1>
+    <h2>Couldn't Access :(</h2>
+    <h3>Permission Denied - You did not have permission to access it <a href="/">BACK</a></h3>
+</div>
+</body>
+</html>

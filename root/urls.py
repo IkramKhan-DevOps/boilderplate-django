@@ -17,20 +17,27 @@ handler500 = handler500
 """ EXTERNAL REQUIRED APPS ----------------------------------------------------------------------------------------- """
 urlpatterns += [
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
+    path('whisper/', include('src.apps.whisper.urls')),
 ]
 
 """ INTERNAL REQUIRED APPS ----------------------------------------------------------------------------------------- """
 urlpatterns += [
-    path('', include('src.web.website.urls')),
+    path('', include('src.website.urls', namespace='website')),
     path('dashboard/', include('src.services.dashboard.urls', namespace='dashboard')),
     path('accounts/', include('src.services.accounts.urls', namespace='accounts')),
+]
+
+""" ALL AUTH URLS ------------------------------------------------------------------------------------------------------- """
+
+urlpatterns += [
+    path('accounts/', include('allauth.urls')),
 ]
 
 """ STATIC AND MEDIA FILES ----------------------------------------------------------------------------------------- """
 urlpatterns += [
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root': STATIC_ROOT}),
+    path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 ]
 
 """ DEVELOPMENT ONLY -------------------------------------------------------------------------------------------- """

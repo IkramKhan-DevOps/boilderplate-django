@@ -1,0 +1,109 @@
+{% load core_tags %}
+    <div class="row mb-3">
+        <!-- Left Column with Chart -->
+        <div class="col-md-6">
+            <div class="card h-100 mb-4 shadow-sm">
+                <div class="card-header pt-4">
+                    <div class="d-flex flex-column">
+                        <div class="d-flex align-items-center">
+                            <span class="h2 fw-bold  me-2">
+                                {{ list_header.this_month_count }} {{ model_verbose_name_plural }}
+                            </span>
+                            <span class="badge bg-success text-white">
+                                <i class="bi bi-arrow-up me-1"></i>
+                                {{ list_header.this_month_count }}.0%
+                            </span>
+                        </div>
+                        <span class="text-muted small pt-1 fw-semibold">
+                            {{ model_verbose_name_plural }} in this month.
+                        </span>
+                    </div>
+                </div>
+                <div class="card-body pt-3 pb-4 d-flex flex-wrap align-items-center">
+                    <!-- Chart -->
+                    <div class="d-flex justify-content-center align-items-center w-100 mb-3">
+                        <div style="width: 100%; max-width: 150px;">
+                            <canvas id="chart-widget"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="d-flex flex-column flex-grow-1">
+                        {% for key, value in list_header.fields.items %}
+                            <div class="d-flex align-items-center {% if not forloop.first and not forloop.last %}my-2{% endif %}">
+                                <div class="me-3 rounded-circle {% if forloop.first %}bg-success{% elif forloop.last %}bg-secondary{% else %}bg-primary{% endif %}"
+                                     style="width: 8px; height: 8px;"></div>
+                                <div class="text-muted flex-grow-1">{{ key|title }}</div>
+                                <div class="fw-bold  text-end">${{ value|floatformat:0 }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header pt-4">
+                    <div class="d-flex flex-column">
+                        <span class="h5 fw-bold ">{{ model_verbose_name }} Highlights</span>
+                        <span class="text-muted small fw-semibold">Latest {{ model_verbose_name }} statistics</span>
+                    </div>
+                </div>
+                <div class="card-body pt-4">
+                    <div class="mb-3 d-flex justify-content-between">
+                        <span class="text-muted fw-semibold">Total {{ model_verbose_name_plural }}</span>
+                        <span class=" fw-bold">{{ list_header.total_count }}</span>
+                    </div>
+                    <hr>
+                    <div class="mb-3 d-flex justify-content-between">
+                        <span class="text-muted fw-semibold">Inactive {{ model_verbose_name_plural }}</span>
+                        <span class="text-danger fw-bold">{{ list_header.inactive_count }}</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted fw-semibold">Active {{ model_verbose_name_plural }}</span>
+                        <span class="text-success fw-bold">{{ list_header.active_count }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const ctx = document.getElementById("chart-widget").getContext("2d");
+
+        new Chart(ctx, {
+            type: "doughnut",
+            data: {
+                labels: ["This Month", "Other"],
+                datasets: [{
+                    data: [
+                        {{ list_header.this_month_count|default:0 }},
+                        {{ list_header.total_count|default:0|add:"-"|add:list_header.this_month_count|default:0 }}
+                    ],
+                    backgroundColor: ['#28a745', '#e4e6ef'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                cutout: "70%",
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                }
+            }
+        });
+    });
+</script>

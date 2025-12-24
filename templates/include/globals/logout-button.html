@@ -1,0 +1,14 @@
+{% load static %}
+
+<div class="position-absolute top-0 p-4 w-100" >
+    <div class="row">
+        <div class="col-6">
+            <img src="{% static 'core/images/logos/logo-h-indigo-full.png' %}" height="30">
+        </div>
+        <div class="col-6" style="text-align: right;">
+            <a class="btn btn-second-outline" href="{% url 'accounts:cross-auth' %}">
+                Exit
+            </a>
+        </div>
+    </div>
+</div>

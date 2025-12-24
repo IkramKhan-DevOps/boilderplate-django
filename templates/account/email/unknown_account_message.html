@@ -1,0 +1,17 @@
+{% extends 'whisper/base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+    <td class="content-block"
+        style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 10px 10px;"
+        valign="top">You are receiving this email because you or someone else has requested a
+        password for your user account. However, we do not have any record of a user
+        with email {{ email }} in our database.
+        This mail can be safely ignored if you did not request a password reset.
+        If it was you, you can sign up for an account From Our Mobile APP.
+    </td>
+</tr>
+
+{% endblock content %}

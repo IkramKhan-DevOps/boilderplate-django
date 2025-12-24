@@ -1,47 +1,45 @@
-{% extends 'base.html' %}
-
+{% extends 'account/base.html' %}
 {% load i18n %}
-{% load account %}
+{% load account socialaccount %}
 {% load static %}
+{% load socialaccount %}
 {% load crispy_forms_tags %}
 
-{% block title %}{% trans "Verify Your E-mail Address" %}{% endblock %}
+{% block subtitle %}{% trans "Confirm E-mail Address" %}{% endblock %}
 
-{% block base_top_nav %}{% endblock %}
-{% block dont_include_details %}
 
-    {% include 'messages.html' %}
+{% block content %}
+    <div class="card border-0 bg-grey mt-4 rounded-20">
 
-    <div class="account-pages my-5 pt-sm-5">
-        <div class="container">
-
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6 col-xl-6">
-                    <div class="text-center">
-                        {% if user.is_authenticated %}
-                            {% include "account/snippets/already_logged_in.html" %}
-                        {% endif %}
-                    </div>
-
-                    <div class="card shadow">
-                        <div class="card-body text-center">
-                            <p class="card-title m-0">{% trans "Verify Your E-mail Address" %}</p>
-
-                        </div>
-                        <div class="card-body">
-
-                            <p class="card-text">have sent an e-mail to you for verification. Follow the link provided
-                                to
-                                finalize the signup
-                                process. Please contact us if you do not receive it within a few minutes.</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="card-body p-4">
+            <div class="text-center mb-4 border-bottom">
+                <h3 class="shadow-text">Registration</h3>
+                {% if user.is_authenticated %}
+                    {% include "account/snippets/already_logged_in.html" %}
+                {% endif %}
             </div>
 
-            {% include 'include/global-short-footer.html' %}
+            <div class="p-2 mt-3">
 
+                <p class="card-text">we have emailed you for verification. Follow the
+                    link provided
+                    to
+                    finalize the signup
+                    process. Please contact us if you do not receive it within a few
+                    minutes.
+                </p>
+            </div>
         </div>
     </div>
 
+    <div class="mt-4 text-center">
+        <p class="mb-0">
+            Let's get you back to your account
+            <a href="{% url 'account_login' %}"
+               class="fw-semibold text-decoration-underline">
+                Login
+            </a>
+        </p>
+    </div>
 {% endblock %}
+

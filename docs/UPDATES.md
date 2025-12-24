@@ -1,55 +1,92 @@
-# Exarth Company Site - Project Updates
+# Django Boilerplate - Documentation
 
-## 18th Dec, 2025
+## Overview
 
-- ✅ Updated README.md (confidential notice, installation guide, project structure)
-- ✅ Updated .env files in docs/configs/ (.env, .env.example, .env.production)
-- ✅ Updated all bash scripts in docs/bash/ for this project's apps
+This is a production-ready Django boilerplate with authentication, REST API, and modern tooling.
 
-### Changes Made:
+## Features
 
-#### README.md
-- Added confidential notice
-- Complete installation guide (script & manual)
-- Project structure documentation for Exarth Company Site
-- Environment variables documentation (django-environ)
-- Bash scripts usage guide
-- Database migrations guide
-- Admin access instructions
-- Running the server guide
-- Apps overview table
+- **Authentication**: django-allauth with social login (Google), MFA support
+- **REST API**: Django REST Framework with dj-rest-auth
+- **Forms**: Crispy Forms with Bootstrap 5
+- **Email**: Mailchimp Transactional (Mandrill) integration
+- **Phone**: Phone number field support
+- **Filtering**: Django Filter for querysets
+- **API Docs**: Swagger/OpenAPI via drf-yasg
 
-#### docs/configs/
-- `.env.example` - Template for developers with all required variables
-- `.env` - Development environment settings
-- `.env.production` - Production environment template
+## Project Structure
 
-Required environment variables:
-- `DEBUG`, `SECRET_KEY`, `ENVIRONMENT`, `SITE_ID`
-- `DOMAIN`, `PROTOCOL`, `ALLOWED_HOSTS`
-- `DB_ENGINE`, `DB_NAME`, `DB_USER`, `DB_PASS`, `DB_HOST`, `DB_PORT`
-- `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_USE_TLS`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`
-- `DEFAULT_FROM_EMAIL`, `MAILCHIMP_API_KEY`, `MAILCHIMP_FROM_EMAIL`
-
-#### docs/bash/
-All scripts now work from ANY directory using `SCRIPT_DIR` and `PROJECT_ROOT`:
-- `setup.sh` - Complete project setup (venv, deps, migrations, static)
-- `migrations.sh` - Run migrations for all apps: company, projects, resources, services, website
-- `migrations_clean.sh` - Clean all migration files with confirmation (handles src/services/* and src/website/ paths)
-- `requirements.sh` - Install/update Python dependencies
-- `static.sh` - Collect static files
-- `superuser.sh` - Create admin superuser (uses get_user_model for flexibility)
-
-### Apps Structure:
 ```
 src/
-├── services/
-│   ├── company/       # Company info, team, about
-│   ├── projects/      # Portfolio and projects
-│   ├── resources/     # Resources management
-│   └── services/      # Service offerings
-└── website/           # Main website, homepage, contact
+├── core/               # Core utilities (models, helpers, signals, validators)
+├── services/           # Backend services
+│   ├── accounts/       # User accounts & authentication
+│   └── dashboard/      # Dashboard functionality
+└── web/                # Frontend web apps
+    └── website/        # Public website
 ```
 
-### Note:
+## Bash Scripts
+
+All scripts are located in `docs/bash/` and can be run from any directory:
+
+| Script | Description |
+|--------|-------------|
+| `setup.sh` | Complete project setup (venv, deps, migrations, static) |
+| `migrations.sh` | Run migrations for all apps |
+| `migrations_clean.sh` | Clean all migration files (with confirmation) |
+| `requirements.sh` | Install/update Python dependencies |
+| `static.sh` | Collect static files |
+| `superuser.sh` | Create admin superuser |
+
+### Usage
+
+```bash
+# Make scripts executable (first time only)
+chmod +x docs/bash/*.sh
+
+# Run any script
+./docs/bash/setup.sh
+./docs/bash/migrations.sh
+./docs/bash/superuser.sh
+```
+
+## Environment Configuration
+
+### Configuration Files
+
+- `docs/configs/.env` - Development environment
+- `docs/configs/.env.example` - Template for developers
+- `docs/configs/.env.production` - Production environment template
+
+### Required Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `DEBUG` | Enable debug mode | `True` |
+| `SECRET_KEY` | Django secret key | Required |
+| `ENVIRONMENT` | Environment type (`local`/`server`) | `local` |
+| `DOMAIN` | Site domain | `localhost:8000` |
+| `PROTOCOL` | HTTP or HTTPS | `http` |
+| `ALLOWED_HOSTS` | Comma-separated list of hosts | `localhost,127.0.0.1` |
+| `SITE_ID` | Django site ID | `1` |
+| `DB_*` | Database configuration | SQLite (local) |
+
+## Getting Started
+
+1. Clone the repository
+2. Run the setup script: `./docs/bash/setup.sh`
+3. Start the server: `python manage.py runserver`
+4. Access admin at: `http://localhost:8000/admin/`
+
+### Default Superuser Credentials
+
+- **Email:** admin@example.com
+- **Username:** admin
+- **Password:** admin
+
+---
+
+## Notes
+
 Run `chmod +x docs/bash/*.sh` to make scripts executable before first use.

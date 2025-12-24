@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load static crispy_forms_tags core_tags widget_tweaks %}
+
+{% block subtitle %}
+    {% model_verbose_name view.model %} Form
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid" id="kt_app_main">
+        <div class="d-flex flex-column">
+            <div class="mb-3">
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                    <div class="d-flex flex-column me-3">
+                        <h1 class="h3 fw-bold mb-0">
+                            {% model_app_name view.model %}
+                        </h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0 pt-1 text-muted">
+                                {% block breadcrumbs %}
+                                    <li class="breadcrumb-item">{% model_verbose_name view.model %}
+                                    </li>
+                                    {% if object %}
+                                        <li class="breadcrumb-item">{{ object }}</li>
+                                    {% endif %}
+                                    <li class="breadcrumb-item active">Form</li>
+                                {% endblock %}
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        {% block toolbar_actions %}
+                            <a href="javascript:window.history.back();" class="btn fw-bold btn-primary shadow-sm">
+                                <i class="bx bx-arrow-back"></i> Back
+                            </a>
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-sm-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            {% block sub_content %}
+                                <form method="post">
+                                    {% crispy form %}
+                                    <div class="">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
