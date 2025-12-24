@@ -17,16 +17,7 @@
         </li>
     {% endif %}
 
-    {% if request.user.is_superuser or perms.onboarding.view_onboarding %}
-
-        <li class="nav-item">
-            <a class="nav-link menu-link" href="{% url 'onboarding:onboarding_list' %}" role="button">
-                <i class="bx bx-building"></i><span data-key="t-dashboards">Onboards</span>
-            </a>
-        </li>
-    {% endif %}
-
-    {% if request.user.is_superuser or perms.management.view_platform  or perms.management.view_country or perms.management.view_state  or perms.management.view_industry  or perms.management.view_industry or perms.management.view_annualincome %}
+    {% if request.user.is_superuser or perms.management.view_country or perms.management.view_state or perms.whisper.view_emailnotification %}
 
         <li class="nav-item">
             <a class="nav-link menu-link" href="#sidebarPages3" data-bs-toggle="collapse" role="button"
@@ -37,12 +28,6 @@
             <div class="collapse menu-dropdown" id="sidebarPages3">
                 <ul class="nav nav-sm flex-column">
 
-                    {% if request.user.is_superuser or perms.management.view_platform %}
-                        <li class="nav-item">
-                            <a href="{% url 'management:platform_list' %}" class="nav-link"
-                               data-key="t-starter">Platforms</a>
-                        </li>
-                    {% endif %}
                     {% if request.user.is_superuser or perms.management.view_country %}
 
                         <li class="nav-item">
@@ -58,21 +43,6 @@
                                data-key="t-starter">States</a>
                         </li>
                     {% endif %}
-                    {% if request.user.is_superuser or perms.management.view_industry %}
-
-                        <li class="nav-item">
-                            <a href="{% url 'management:industry_list' %}" class="nav-link"
-                               data-key="t-starter">Industries</a>
-                        </li>
-                    {% endif %}
-
-                    {% if request.user.is_superuser or perms.management.view_annualincome %}
-
-                        <li class="nav-item">
-                            <a href="{% url 'management:annualincome_list' %}" class="nav-link"
-                               data-key="t-starter">Annual Income</a>
-                        </li>
-                    {% endif %}
 
                     {% if request.user.is_superuser or perms.whisper.view_emailnotification %}
                         <li class="nav-item">
@@ -86,16 +56,10 @@
         </li>
     {% endif %}
 
-    <li class="nav-item">
-        <a class="nav-link menu-link" href="{% url 'resources:learningresource_list' %}" role="button">
-            <i class="bx bx-play"></i><span data-key="t-dashboards">Resources</span>
-        </a>
-    </li>
-
     {% if request.user.is_superuser %}
         <li class="nav-item">
             <a class="text-danger nav-link menu-link" href="/admin/" role="button">
-                <i class="bx bx-shield-x"></i><span data-key="t-dashboards">Centris Access</span>
+                <i class="bx bx-shield-x"></i><span data-key="t-dashboards">Access</span>
             </a>
         </li>
     {% endif %}

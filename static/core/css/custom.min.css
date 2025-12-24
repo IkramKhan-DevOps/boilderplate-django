@@ -1,0 +1,98 @@
+
+/*# sourceMappingURL=custom.min.css.map */
+
+
+/* Dashboard Gradient Cards */
+.bg-gradient-purple { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.bg-gradient-teal { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.bg-gradient-orange { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.bg-gradient-indigo { background: linear-gradient(135deg, #5ee7df 0%, #b490ca 100%); }
+.bg-gradient-pink { background: linear-gradient(135deg, #c471f5 0%, #fa71cd 100%); }
+.bg-gradient-primary { background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); }
+.bg-gradient-success { background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%); }
+.bg-gradient-dark { background: linear-gradient(135deg, #5a5c69 0%, #3a3b45 100%); }
+.bg-gradient-info { background: linear-gradient(135deg, #36b9cc 0%, #258391 100%); }
+.bg-gradient-warning { background: linear-gradient(135deg, #f6c23e 0%, #dda20a 100%); }
+.bg-gradient-secondary { background: linear-gradient(135deg, #858796 0%, #60616f 100%); }
+.bg-white-20 { background: rgba(255, 255, 255, 0.2); }
+.bg-dark-20 { background: rgba(0, 0, 0, 0.1); }
+.text-white-50 { color: rgba(255, 255, 255, 0.7) !important; }
+.text-dark-50 { color: rgba(0, 0, 0, 0.6) !important; }
+.btn-action {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.btn-action:active {
+    transform: translateY(0);
+}
+
+/* Gradient buttons */
+.btn-primary-gradient {
+    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+    color: white;
+}
+
+.btn-success-gradient {
+    background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%);
+    color: white;
+}
+
+.btn-info-gradient {
+    background: linear-gradient(135deg, #36b9cc 0%, #258391 100%);
+    color: white;
+}
+
+.btn-warning-gradient {
+    background: linear-gradient(135deg, #f6c23e 0%, #dda20a 100%);
+    color: white;
+}
+
+.btn-secondary-gradient {
+    background: linear-gradient(135deg, #858796 0%, #60616f 100%);
+    color: white;
+}
+
+.btn-dark-gradient {
+    background: linear-gradient(135deg, #5a5c69 0%, #3a3b45 100%);
+    color: white;
+}
+
+.btn-danger-gradient {
+    background: linear-gradient(135deg, #e74a3b 0%, #be2617 100%);
+    color: white;
+}
+
+/* Outline buttons */
+.btn-outline-primary {
+    border: 1px solid #4e73df;
+    color: #4e73df;
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: #4e73df;
+    color: white;
+}
+
+.btn-outline-success {
+    border: 1px solid #1cc88a;
+    color: #1cc88a;
+    background: transparent;
+}
+
+.btn-outline-success:hover {
+    background: #1cc88a;
+    color: white;
+}

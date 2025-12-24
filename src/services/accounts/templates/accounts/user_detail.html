@@ -14,30 +14,32 @@
                 <div class="d-flex flex-wrap justify-content-between align-items-center">
                     <div class="d-flex flex-column me-3">
                         <h1 class="h3 fw-bold mb-0">
-                            Accounts
+                            User Profile
                         </h1>
                         <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb mb-0 pt-1 text-muted">
+                            <ol class="breadcrumb mb-0 pt-1">
                                 <li class="breadcrumb-item">
-                                        User
+                                    <a href="{% url 'accounts:cross-auth' %}" class="text-muted text-decoration-none">
+                                        Dashboard
+                                    </a>
                                 </li>
                                 <li class="breadcrumb-item">
+                                    <a href="javascript:window.history.back();"
+                                       class="text-muted text-decoration-none">
+                                        User
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item text-muted">
                                     {{ object }}
                                 </li>
+
                             </ol>
                         </nav>
                     </div>
                     <div class="d-flex align-items-center">
-                        {% if request.user.is_superuser or perms.accounts.delete_user %}
-                            <a href="{% url 'accounts:user_delete' object.id %}"
-                               class="btn fw-bold btn-danger shadow-sm me-2">
-                                <i class="bx bx-trash"></i> Delete User
-                            </a>
-                        {% endif %}
                         <a href="javascript:window.history.back();" class="btn fw-bold btn-primary shadow-sm">
                             <i class="bx bx-arrow-back"></i> Back
                         </a>
-
                     </div>
                 </div>
             </div>
@@ -94,24 +96,25 @@
                                 </div>
 
                                 {% if request.user.is_superuser or perms.accounts.change_user %}
-                                    <div class="col">
-                                        <p class="mb-0 text-center h3"><i class="bx bx-user"></i></p>
-                                        <p class="mb-0 text-center h5">Edit</p>
-                                        <p class="mb-0 text-center">
-                                            <a class="text-danger"
-                                               href="{% url 'accounts:user_update_full' user.pk %}">Change</a>
-                                        </p>
-                                    </div>
+                                <div class="col">
+                                    <p class="mb-0 text-center h3"><i class="bx bx-user"></i></p>
+                                    <p class="mb-0 text-center h5">Edit</p>
+                                    <p class="mb-0 text-center">
+                                        <a class="text-danger"
+                                           href="{% url 'accounts:user_update_full' user.pk %}">Change</a>
+                                    </p>
+                                </div>
 
-                                    <div class="col">
-                                        <p class="mb-0 text-center h3"><i class="mdi mdi-shield"></i></p>
-                                        <p class="mb-0 text-center h5">Password</p>
-                                        <p class="mb-0 text-center">
-                                            <a class="text-danger"
-                                               href="{% url 'accounts:user-password-reset-view' user.pk %}">Change</a>
-                                        </p>
-                                    </div>
+                                <div class="col">
+                                    <p class="mb-0 text-center h3"><i class="mdi mdi-shield"></i></p>
+                                    <p class="mb-0 text-center h5">Password</p>
+                                    <p class="mb-0 text-center">
+                                        <a class="text-danger"
+                                           href="{% url 'accounts:user-password-reset-view' user.pk %}">Change</a>
+                                    </p>
+                                </div>
                                 {% endif %}
+
                             </div>
 
                         </div>
@@ -119,472 +122,217 @@
                 </div>
             </div>
 
-            {% if request.user.is_superuser and not object.is_superuser %}
-            <!-- Tabbed Section for Permissions & Sales Team Management -->
-            <div class="card">
-                <div class="card-header border-bottom pb-0">
-                    <ul class="nav nav-tabs nav-tabs-custom nav-justified border-bottom-0" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active bg-primary-subtle" data-bs-toggle="tab" href="#permissions-tab" role="tab">
-                                <i class="bx bx-shield-quarter me-1"></i>Permissions Management
-                            </a>
-                        </li>
-                        {% if sales_team_form %}
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#sales-team-tab" role="tab">
-                                <i class="bx bx-group me-1"></i>Sales Team Management
-                                <span class="badge bg-primary ms-1">{{ current_team.count }}</span>
-                            </a>
-                        </li>
-                        {% endif %}
-                        {% if assigned_managers %}
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#managers-tab" role="tab">
-                                <i class="bx bx-user-check me-1"></i>Assigned Managers
-                                <span class="badge bg-success ms-1">{{ assigned_managers.count }}</span>
-                            </a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </div>
+            {% if not object.is_superuser and request.user.is_superuser %}
 
-                <div class="tab-content">
-                    <!-- Permissions Tab -->
-                    <div class="tab-pane active" id="permissions-tab" role="tabpanel">
-                        <!-- Permissions Form -->
-                            <form method="post" action="{% url 'accounts:user_permission_update' object.id %}">
-                                {% csrf_token %}
-                                <div class="card-header border-bottom bg-transparent">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title fw-bold text-dark mb-0">Permissions Management</h5>
-                                        <div>
-                                            <button type="button" class="btn btn-sm btn-soft-primary shadow-sm ms-1"
-                                                    id="expand-all">
-                                                <i class="bx bx-plus"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-outline-primary shadow-sm ms-1"
-                                                    id="collapse-all">
-                                                <i class="bx bx-minus"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-primary shadow-sm ms-1" type="submit">
-                                                <i class="bx bx-save me-1"></i>Save Changes
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-0">
-                                    <div class="row">
-                                        <!-- User Level Permissions -->
-                                        <div class="col-12 col-xl-6">
-                                            <div class="card border-0 shadow-none h-100">
-                                                <div class="card-header bg-transparent border-0">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <h5 class="card-title mb-0 text-dark">
-                                                            <i class="bx bx-user-check me-2"></i>User Level Permissions
-                                                        </h5>
-                                                        <div class="btn-group btn-group-sm">
-                                                            <button type="button" class="btn btn-sm btn-primary"
-                                                                    id="check-all">
-                                                                <i class="bx bx-check me-1"></i>Select All
-                                                            </button>
-                                                            <button type="button" class="btn btn-sm btn-soft-primary"
-                                                                    id="uncheck-all">
-                                                                <i class="bx bx-x me-1"></i>Clear All
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body p-0">
-                                                    <div class="input-group p-3 border-bottom">
-                                                        <span class="input-group-text bg-light border-end-0">
-                                                            <i class="bx bx-search text-muted"></i>
-                                                        </span>
-                                                        <input type="text" class="form-control border-start-0"
-                                                               id="permission-search"
-                                                               placeholder="Search permissions...">
-                                                    </div>
-                                                    <div class="permissions-container" style="height: 500px; overflow-y: auto;">
-                                                        <div class="p-3">
-                                                            {% regroup permission_list by content_type.app_label as app_list %}
+                {% if user.user_type == 'client' %}
+                    <div class="col-sm-12">
+                        <p class="mb-2 bg-danger text-white rounded p-2">
+                            This is client account, permissions are assigned by default be careful while
+                            modifying access.
+                        </p>
+                    </div>
+                {% endif %}
 
-                                                            {% for app in app_list %}
-                                                                <div class="app-group mb-2">
-                                                                    <div class="app-header d-flex align-items-center p-2 bg-light border cursor-pointer"
-                                                                         data-bs-toggle="collapse"
-                                                                         data-bs-target="#app-{{ app.grouper|slugify }}-user">
-                                                                        <i class="bx bx-chevron-down me-2 transition-icon"></i>
-                                                                        <span class="fw-bold text-dark">{{ app.grouper|title }}</span>
-                                                                        <span class="badge bg-primary ms-2">{{ app.list|length }}</span>
-                                                                    </div>
-
-                                                                    <div class="collapse show"
-                                                                         id="app-{{ app.grouper|slugify }}-user">
-                                                                        {% regroup app.list by content_type.model as model_list %}
-
-                                                                        {% for model in model_list %}
-                                                                            <div class="model-group ms-4 mt-2">
-                                                                                <div class="model-header d-flex align-items-center p-1 ps-3 cursor-pointer"
-                                                                                     data-bs-toggle="collapse"
-                                                                                     data-bs-target="#model-{{ app.grouper|slugify }}-{{ model.grouper|slugify }}-user">
-                                                                                    <i class="bx bx-chevron-down me-2 small transition-icon"></i>
-                                                                                    <span class="fw-semibold text-dark small">{{ model.grouper|title }}</span>
-                                                                                    <span class="badge bg-secondary ms-2 small">{{ model.list|length }}</span>
-                                                                                </div>
-
-                                                                                <div class="collapse show"
-                                                                                     id="model-{{ app.grouper|slugify }}-{{ model.grouper|slugify }}-user">
-                                                                                    <div class="ms-5">
-                                                                                        {% for permission in model.list %}
-                                                                                            <div class="permission-item d-flex align-items-center p-1 ps-2">
-                                                                                                <input class="form-check-input permission-checkbox me-2"
-                                                                                                       type="checkbox"
-                                                                                                       name="permissions"
-                                                                                                       id="permission{{ permission.id }}"
-                                                                                                       value="{{ permission.id }}"
-                                                                                                        {% if permission.checked %}
-                                                                                                       checked {% endif %}>
-                                                                                                <label class="form-check-label small text-muted mb-0 flex-grow-1"
-                                                                                                       for="permission{{ permission.id }}">
-                                                                                                    {{ permission.name }}
-                                                                                                </label>
-                                                                                            </div>
-                                                                                        {% endfor %}
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        {% endfor %}
-                                                                    </div>
-                                                                </div>
-                                                            {% endfor %}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Group Level Permissions -->
-                                        <div class="col-12 col-xl-6">
-                                            <div class="card border-0 shadow-none h-100">
-                                                <div class="card-header bg-transparent border-0">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <h5 class="card-title mb-0 text-dark">
-                                                            <i class="bx bx-group me-2"></i>Group Level Permissions
-                                                        </h5>
-                                                        <div class="btn-group btn-group-sm">
-                                                            <a href="{% url 'accounts:permission_add' %}"
-                                                               class="btn btn-sm btn-success">
-                                                                <i class="bx bx-plus me-1"></i> New
-                                                            </a>
-                                                            <button type="button" class="btn btn-sm btn-primary"
-                                                                    id="group-check-all">
-                                                                <i class="bx bx-check me-1"></i>Select All
-                                                            </button>
-                                                            <button type="button" class="btn btn-sm btn-soft-primary"
-                                                                    id="group-uncheck-all">
-                                                                <i class="bx bx-x me-1"></i>Clear All
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body p-0">
-                                                    <div class="input-group p-3 border-bottom">
-                                                        <span class="input-group-text bg-light border-end-0">
-                                                            <i class="bx bx-search text-muted"></i>
-                                                        </span>
-                                                        <input type="text" class="form-control border-start-0"
-                                                               id="group-permission-search"
-                                                               placeholder="Search group permissions...">
-                                                    </div>
-                                                    <div class="permissions-container" style="height: 500px; overflow-y: auto;">
-                                                        <div class="p-3">
-                                                            {% for permission in group_permission_list %}
-                                                                <div class="group-permission-item border-bottom pb-3 mb-3">
-                                                                    <div class="d-flex justify-content-between align-items-start mb-2">
-                                                                        <div class="flex-grow-1">
-                                                                            <div class="form-check mb-2">
-                                                                                <input class="form-check-input group-permission-checkbox"
-                                                                                       type="checkbox"
-                                                                                       name="group_permissions"
-                                                                                       id="grouppermission{{ permission.id }}"
-                                                                                       value="{{ permission.id }}"
-                                                                                        {% if permission.checked %}
-                                                                                       checked {% endif %}>
-                                                                                <label class="form-check-label fw-semibold text-dark"
-                                                                                       for="grouppermission{{ permission.id }}">
-                                                                                    {{ permission.name }}
-                                                                                </label>
-                                                                            </div>
-                                                                            <small class="text-muted d-block">{{ permission.content_type }}</small>
-                                                                        </div>
-                                                                        <div class="btn-group btn-group-sm ms-2">
-                                                                            <a href="{% url 'accounts:permission_update' permission.id %}"
-                                                                               class="btn btn-outline-primary btn-sm">
-                                                                                <i class="bx bx-edit"></i>
-                                                                            </a>
-                                                                            <a href="{% url 'accounts:permission_delete' permission.id object.id %}"
-                                                                               class="btn btn-outline-danger btn-sm">
-                                                                                <i class="bx bx-trash"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="ms-3">
-                                                                        {% for perm in permission.permissions.all %}
-                                                                            <span class="badge bg-light text-dark border small me-1 mb-1">
-                                                                                {{ perm.content_type }}: {{ perm.name }}
-                                                                            </span>
-                                                                        {% endfor %}
-                                                                    </div>
-                                                                </div>
-                                                            {% endfor %}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                        {% if sales_team_form %}
-                        <!-- Sales Team Tab -->
-                        <div class="tab-pane" id="sales-team-tab" role="tabpanel">
-                            <form method="post" action="{% url 'accounts:sales_team_assign' user.pk %}">
-                                {% csrf_token %}
-                                <div class="card-header border-bottom bg-transparent">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title fw-bold text-dark mb-0">Sales Team Management</h5>
-                                        <div>
-                                            <span class="badge bg-primary me-2">{{ current_team.count }} Member{{ current_team.count|pluralize }}</span>
-                                            {% if sales_team_form.sales_men.field.queryset.exists %}
-                                            <button class="btn btn-sm btn-primary shadow-sm" type="submit">
-                                                <i class="bx bx-save me-1"></i>Save Changes
-                                            </button>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-0">
-                                    {% if current_team %}
-                                    <div class="p-4 border-bottom">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="avatar-sm flex-shrink-0 me-3">
-                                                <span class="avatar-title bg-primary-subtle text-primary rounded-circle fs-4">
-                                                    <i class="bx bx-user-check"></i>
-                                                </span>
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-0 fw-semibold">Currently Assigned Sales Representatives</h6>
-                                                <p class="text-muted mb-0 small">Active team members under this manager</p>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="permissions-container" style="height: 300px; overflow-y: auto;">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover align-middle mb-0">
-                                                <thead class="bg-light">
-                                                    <tr>
-                                                        <th class="border-0 py-3"><i class="bx bx-user me-1 text-muted"></i>Name</th>
-                                                        <th class="border-0 py-3"><i class="bx bx-envelope me-1 text-muted"></i>Email</th>
-                                                        <th class="border-0 py-3"><i class="bx bx-building me-1 text-muted"></i>Platform</th>
-                                                        <th class="border-0 py-3 text-center"><i class="bx bx-check-circle me-1 text-muted"></i>Status</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for member in current_team %}
-                                                    <tr>
-                                                        <td class="py-3">
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="avatar-xs me-2">
-                                                                    <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                        {{ member.first_name|slice:":1"|upper }}{{ member.last_name|slice:":1"|upper }}
-                                                                    </span>
-                                                                </div>
-                                                                <span class="fw-semibold">{{ member.get_full_name|default:member.username }}</span>
-                                                            </div>
-                                                        </td>
-                                                        <td class="py-3 text-muted">{{ member.email }}</td>
-                                                        <td class="py-3">
-                                                            {% if member.platform %}
-                                                                <span class="badge bg-info-subtle text-info">{{ member.platform }}</span>
-                                                            {% else %}
-                                                                <span class="text-muted">—</span>
-                                                            {% endif %}
-                                                        </td>
-                                                        <td class="py-3 text-center">
-                                                            {% if member.is_active %}
-                                                            <span class="badge bg-success-subtle text-success px-3 py-2">
-                                                                <i class="bx bx-check-circle me-1"></i>Active
-                                                            </span>
-                                                            {% else %}
-                                                            <span class="badge bg-danger-subtle text-danger px-3 py-2">
-                                                                <i class="bx bx-x-circle me-1"></i>Inactive
-                                                            </span>
-                                                            {% endif %}
-                                                        </td>
-                                                    </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    
-                                    <div class="p-4">
-                                        <div class="d-flex align-items-start mb-4">
-                                            <div class="avatar-sm flex-shrink-0 me-3">
-                                                <span class="avatar-title bg-success-subtle text-success rounded-circle fs-4">
-                                                    <i class="bx bx-user-plus"></i>
-                                                </span>
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-1 fw-semibold">Assign Sales Representatives</h6>
-                                                <p class="text-muted mb-0 small">
-                                                    <i class="bx bx-info-circle me-1"></i>
-                                                    Select the sales representatives you want to assign to this manager. 
-                                                    Sales reps can be assigned to multiple managers simultaneously.
-                                                </p>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="permissions-container" style="height: 400px; overflow-y: auto;">
-                                        <div class="row g-3 pb-3">
-                                            {% for checkbox in sales_team_form.sales_men %}
-                                            <div class="col-md-6 col-lg-4">
-                                                <div class="border rounded p-3 h-100 hover-shadow transition-all {% if checkbox.data.selected %}border-success bg-success-subtle{% else %}bg-light{% endif %}"
-                                                     style="cursor: pointer; transition: all 0.3s ease;">
-                                                    <div class="form-check d-flex align-items-center">
-                                                        {{ checkbox.tag }}
-                                                        <label class="form-check-label ms-2 flex-grow-1" for="{{ checkbox.id_for_label }}" style="cursor: pointer;">
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="avatar-xs me-2">
-                                                                    <span class="avatar-title rounded-circle {% if checkbox.data.selected %}bg-success text-white{% else %}bg-primary-subtle text-primary{% endif %}">
-                                                                        <i class="bx bx-user"></i>
-                                                                    </span>
-                                                                </div>
-                                                                <span class="fw-medium">{{ checkbox.choice_label }}</span>
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {% empty %}
-                                            <div class="col-12">
-                                                <div class="alert alert-info border-info mb-0 d-flex align-items-center">
-                                                    <i class="bx bx-info-circle fs-3 me-3"></i>
-                                                    <div>
-                                                        <strong>No Available Sales Representatives</strong>
-                                                        <p class="mb-0 small">All sales representatives are either assigned to other managers or there are no active sales representatives in the system.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {% endfor %}
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        {% endif %}
-
-                        {% if assigned_managers %}
-                        <!-- Assigned Managers Tab (for Sales Reps) -->
-                        <div class="tab-pane" id="managers-tab" role="tabpanel">
-                            <div class="card-header border-bottom bg-transparent">
+                <!-- Enhanced Permissions Section -->
+                <form method="post" action="{% url 'accounts:user_permission_update' object.id %}">
+                    {% csrf_token %}
+                    <div class="card">
+                        <div class="card-header border-bottom">
+                            <div class="col-12">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <h5 class="card-title fw-bold text-dark mb-0">Assigned Managers</h5>
-                                    <span class="badge bg-success">{{ assigned_managers.count }} Manager{{ assigned_managers.count|pluralize }}</span>
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="avatar-sm flex-shrink-0 me-3">
-                                        <span class="avatar-title bg-success-subtle text-success rounded-circle fs-4">
-                                            <i class="bx bx-user-check"></i>
-                                        </span>
-                                    </div>
+                                    <h4 class="card-title fw-bold text-dark">Permissions Management</h4>
                                     <div>
-                                        <h6 class="mb-0 fw-semibold">Manager Assignments</h6>
-                                        <p class="text-muted mb-0 small">All managers this sales rep reports to</p>
+                                        <button type="button" class="btn btn-sm btn-soft-primary shadow-sm ms-1"
+                                                id="expand-all">
+                                            <i class="bx bx-plus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-primary shadow-sm ms-1"
+                                                id="collapse-all">
+                                            <i class="bx bx-minus"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-primary shadow-sm ms-1" type="submit">
+                                            <i class="bx bx-save me-1"></i>Save Changes
+                                        </button>
                                     </div>
-                                </div>
-
-                                <div class="table-responsive">
-                                    <table class="table table-hover align-middle mb-0">
-                                        <thead class="bg-light">
-                                            <tr>
-                                                <th class="border-0 py-3"><i class="bx bx-user me-1 text-muted"></i>Manager Name</th>
-                                                <th class="border-0 py-3"><i class="bx bx-envelope me-1 text-muted"></i>Email</th>
-                                                <th class="border-0 py-3"><i class="bx bx-building me-1 text-muted"></i>Platform</th>
-                                                <th class="border-0 py-3"><i class="bx bx-calendar me-1 text-muted"></i>Assigned Date</th>
-                                                <th class="border-0 py-3 text-center"><i class="bx bx-star me-1 text-muted"></i>Type</th>
-                                                <th class="border-0 py-3 text-center"><i class="bx bx-check-circle me-1 text-muted"></i>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for assignment in manager_assignments %}
-                                            <tr>
-                                                <td class="py-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar-xs me-2">
-                                                            <span class="avatar-title rounded-circle bg-soft-success text-success">
-                                                                {{ assignment.manager.first_name|slice:":1"|upper }}{{ assignment.manager.last_name|slice:":1"|upper }}
-                                                            </span>
-                                                        </div>
-                                                        <div>
-                                                            <span class="fw-semibold d-block">{{ assignment.manager.get_full_name|default:assignment.manager.username }}</span>
-                                                            {% if assignment.assigned_by %}
-                                                            <small class="text-muted">Assigned by: {{ assignment.assigned_by.get_full_name|default:assignment.assigned_by.email }}</small>
-                                                            {% endif %}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="py-3 text-muted">{{ assignment.manager.email }}</td>
-                                                <td class="py-3">
-                                                    {% if assignment.manager.platform %}
-                                                        <span class="badge bg-info-subtle text-info">{{ assignment.manager.platform }}</span>
-                                                    {% else %}
-                                                        <span class="text-muted">—</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="py-3 text-muted">
-                                                    <small>{{ assignment.assigned_at|date:"M d, Y" }}</small>
-                                                </td>
-                                                <td class="py-3 text-center">
-                                                    {% if assignment.is_primary %}
-                                                    <span class="badge bg-warning-subtle text-warning px-3 py-2">
-                                                        <i class="bx bx-star me-1"></i>Primary
-                                                    </span>
-                                                    {% else %}
-                                                    <span class="badge bg-secondary-subtle text-secondary px-3 py-2">
-                                                        Secondary
-                                                    </span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="py-3 text-center">
-                                                    {% if assignment.is_active %}
-                                                    <span class="badge bg-success-subtle text-success px-3 py-2">
-                                                        <i class="bx bx-check-circle me-1"></i>Active
-                                                    </span>
-                                                    {% else %}
-                                                    <span class="badge bg-danger-subtle text-danger px-3 py-2">
-                                                        <i class="bx bx-x-circle me-1"></i>Inactive
-                                                    </span>
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
                         </div>
-                        {% endif %}
+                        <div class="card-body p-0">
 
+                            <div class="row">
+                                <!-- User Level Permissions -->
+                                <div class="col-12 col-xl-6">
+                                    <div class="card border-0 shadow-none h-100">
+                                        <div class="card-header bg-transparent border-0">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h5 class="card-title mb-0 text-dark">
+                                                    <i class="bx bx-user-check me-2"></i>User Level Permissions
+                                                </h5>
+                                                <div class="btn-group btn-group-sm">
+                                                    <button type="button" class="btn btn-sm btn-primary"
+                                                            id="check-all">
+                                                        <i class="bx bx-check me-1"></i>Select All
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-soft-primary"
+                                                            id="uncheck-all">
+                                                        <i class="bx bx-x me-1"></i>Clear All
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="input-group p-3 border-bottom">
+                        <span class="input-group-text bg-light border-end-0">
+                            <i class="bx bx-search text-muted"></i>
+                        </span>
+                                                <input type="text" class="form-control border-start-0"
+                                                       id="permission-search"
+                                                       placeholder="Search permissions...">
+                                            </div>
+                                            <div class="permissions-container" style="height: 500px; overflow-y: auto;">
+                                                <div class="p-3">
+                                                    {% regroup permission_list by content_type.app_label as app_list %}
+
+                                                    {% for app in app_list %}
+                                                        <div class="app-group mb-2">
+                                                            <div class="app-header d-flex align-items-center p-2 bg-light border cursor-pointer"
+                                                                 data-bs-toggle="collapse"
+                                                                 data-bs-target="#app-{{ app.grouper|slugify }}-user">
+                                                                <i class="bx bx-chevron-down me-2 transition-icon"></i>
+                                                                <span class="fw-bold text-dark">{{ app.grouper|title }}</span>
+                                                                <span class="badge bg-primary ms-2">{{ app.list|length }}</span>
+                                                            </div>
+
+                                                            <div class="collapse show"
+                                                                 id="app-{{ app.grouper|slugify }}-user">
+                                                                {% regroup app.list by content_type.model as model_list %}
+
+                                                                {% for model in model_list %}
+                                                                    <div class="model-group ms-4 mt-2">
+                                                                        <div class="model-header d-flex align-items-center p-1 ps-3 cursor-pointer"
+                                                                             data-bs-toggle="collapse"
+                                                                             data-bs-target="#model-{{ app.grouper|slugify }}-{{ model.grouper|slugify }}-user">
+                                                                            <i class="bx bx-chevron-down me-2 small transition-icon"></i>
+                                                                            <span class="fw-semibold text-dark small">{{ model.grouper|title }}</span>
+                                                                            <span class="badge bg-secondary ms-2 small">{{ model.list|length }}</span>
+                                                                        </div>
+
+                                                                        <div class="collapse show"
+                                                                             id="model-{{ app.grouper|slugify }}-{{ model.grouper|slugify }}-user">
+                                                                            <div class="ms-5">
+                                                                                {% for permission in model.list %}
+                                                                                    <div class="permission-item d-flex align-items-center p-1 ps-2">
+                                                                                        <input class="form-check-input permission-checkbox me-2"
+                                                                                               type="checkbox"
+                                                                                               name="permissions"
+                                                                                               id="permission{{ permission.id }}"
+                                                                                               value="{{ permission.id }}"
+                                                                                                {% if permission.checked %}
+                                                                                               checked {% endif %}>
+                                                                                        <label class="form-check-label small text-muted mb-0 flex-grow-1"
+                                                                                               for="permission{{ permission.id }}">
+                                                                                            {{ permission.name }}
+                                                                                        </label>
+                                                                                    </div>
+                                                                                {% endfor %}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Group Level Permissions -->
+                                <div class="col-12 col-xl-6">
+                                    <div class="card border-0 shadow-none h-100">
+                                        <div class="card-header bg-transparent border-0">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h5 class="card-title mb-0 text-dark">
+                                                    <i class="bx bx-group me-2"></i>Group Level Permissions
+                                                </h5>
+                                                <div class="btn-group btn-group-sm">
+                                                    <a href="{% url 'accounts:permission_add' %}"
+                                                       class="btn btn-sm btn-success">
+                                                        <i class="bx bx-plus me-1"></i> New
+                                                    </a>
+                                                    <button type="button" class="btn btn-sm btn-primary"
+                                                            id="group-check-all">
+                                                        <i class="bx bx-check me-1"></i>Select All
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-soft-primary"
+                                                            id="group-uncheck-all">
+                                                        <i class="bx bx-x me-1"></i>Clear All
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="input-group p-3 border-bottom">
+                        <span class="input-group-text bg-light border-end-0">
+                            <i class="bx bx-search text-muted"></i>
+                        </span>
+                                                <input type="text" class="form-control border-start-0"
+                                                       id="group-permission-search"
+                                                       placeholder="Search group permissions...">
+                                            </div>
+                                            <div class="permissions-container" style="height: 500px; overflow-y: auto;">
+                                                <div class="p-3">
+                                                    {% for permission in group_permission_list %}
+                                                        <div class="group-permission-item border-bottom pb-3 mb-3">
+                                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                                <div class="flex-grow-1">
+                                                                    <div class="form-check mb-2">
+                                                                        <input class="form-check-input group-permission-checkbox"
+                                                                               type="checkbox"
+                                                                               name="group_permissions"
+                                                                               id="grouppermission{{ permission.id }}"
+                                                                               value="{{ permission.id }}"
+                                                                                {% if permission.checked %}
+                                                                               checked {% endif %}>
+                                                                        <label class="form-check-label fw-semibold text-dark"
+                                                                               for="grouppermission{{ permission.id }}">
+                                                                            {{ permission.name }}
+                                                                        </label>
+                                                                    </div>
+                                                                    <small class="text-muted d-block">{{ permission.content_type }}</small>
+                                                                </div>
+                                                                <div class="btn-group btn-group-sm ms-2">
+                                                                    <a href="{% url 'accounts:permission_update' permission.id %}"
+                                                                       class="btn btn-outline-primary btn-sm">
+                                                                        <i class="bx bx-edit"></i>
+                                                                    </a>
+                                                                    <a href="{% url 'accounts:permission_delete' permission.id object.id %}"
+                                                                       class="btn btn-outline-danger btn-sm">
+                                                                        <i class="bx bx-trash"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ms-3">
+                                                                {% for perm in permission.permissions.all %}
+                                                                    <span class="badge bg-light text-dark border small me-1 mb-1">
+                                            {{ perm.content_type }}: {{ perm.name }}
+                                        </span>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-            </div>
+                </form>
+
             {% endif %}
         </div>
     </div>
@@ -594,94 +342,93 @@
 {% block js-code %}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Tab switching - update bg-primary-subtle on active tab
-            const tabButtons = document.querySelectorAll('[data-bs-toggle="tab"]');
-            tabButtons.forEach(tab => {
-                tab.addEventListener('shown.bs.tab', function (e) {
-                    tabButtons.forEach(t => t.classList.remove('bg-primary-subtle'));
-                    e.target.classList.add('bg-primary-subtle');
+            // Expand/Collapse All functionality
+            const expandAllBtn = document.getElementById('expand-all');
+            const collapseAllBtn = document.getElementById('collapse-all');
+
+            expandAllBtn?.addEventListener('click', function () {
+                document.querySelectorAll('.collapse').forEach(collapse => {
+                    new bootstrap.Collapse(collapse, {show: true});
+                });
+                document.querySelectorAll('.transition-icon').forEach(icon => {
+                    icon.classList.remove('bx-chevron-right');
+                    icon.classList.add('bx-chevron-down');
                 });
             });
 
-            // Expand/Collapse All
-            const expandAll = document.getElementById('expand-all');
-            const collapseAll = document.getElementById('collapse-all');
-
-            if (expandAll) {
-                expandAll.addEventListener('click', function () {
-                    document.querySelectorAll('.collapse').forEach(function (collapse) {
-                        new bootstrap.Collapse(collapse, {show: true});
-                    });
-                    document.querySelectorAll('.transition-icon').forEach(function (icon) {
-                        icon.classList.replace('bx-chevron-right', 'bx-chevron-down');
-                    });
+            collapseAllBtn?.addEventListener('click', function () {
+                document.querySelectorAll('.collapse').forEach(collapse => {
+                    new bootstrap.Collapse(collapse, {hide: true});
                 });
-            }
+                document.querySelectorAll('.transition-icon').forEach(icon => {
+                    icon.classList.remove('bx-chevron-down');
+                    icon.classList.add('bx-chevron-right');
+                });
+            });
 
-            if (collapseAll) {
-                collapseAll.addEventListener('click', function () {
-                    document.querySelectorAll('.collapse').forEach(function (collapse) {
-                        new bootstrap.Collapse(collapse, {hide: true});
-                    });
-                    document.querySelectorAll('.transition-icon').forEach(function (icon) {
+            // Handle icon rotation on collapse
+            document.querySelectorAll('.app-header, .model-header').forEach(header => {
+                header.addEventListener('click', function () {
+                    const icon = this.querySelector('.transition-icon');
+                    if (icon.classList.contains('bx-chevron-down')) {
                         icon.classList.replace('bx-chevron-down', 'bx-chevron-right');
-                    });
+                    } else {
+                        icon.classList.replace('bx-chevron-right', 'bx-chevron-down');
+                    }
+                });
+            });
+
+            // User Level Permissions - Select All/Clear All
+            const checkAllLink = document.getElementById('check-all');
+            const uncheckAllLink = document.getElementById('uncheck-all');
+            const permissionCheckboxes = document.querySelectorAll('.permission-checkbox');
+
+            function checkAll() {
+                permissionCheckboxes.forEach(function (checkbox) {
+                    checkbox.checked = true;
                 });
             }
 
-            // Check/Uncheck All User Permissions
-            const checkAll = document.getElementById('check-all');
-            const uncheckAll = document.getElementById('uncheck-all');
-
-            if (checkAll) {
-                checkAll.addEventListener('click', function () {
-                    document.querySelectorAll('.permission-checkbox').forEach(function (checkbox) {
-                        checkbox.checked = true;
-                    });
+            function uncheckAll() {
+                permissionCheckboxes.forEach(function (checkbox) {
+                    checkbox.checked = false;
                 });
             }
 
-            if (uncheckAll) {
-                uncheckAll.addEventListener('click', function () {
-                    document.querySelectorAll('.permission-checkbox').forEach(function (checkbox) {
-                        checkbox.checked = false;
-                    });
+            checkAllLink?.addEventListener('click', checkAll);
+            uncheckAllLink?.addEventListener('click', uncheckAll);
+
+            // Group Level Permissions
+            const groupCheckAllLink = document.getElementById('group-check-all');
+            const groupUncheckAllLink = document.getElementById('group-uncheck-all');
+            const groupPermissionCheckboxes = document.querySelectorAll('.group-permission-checkbox');
+
+            function groupCheckAll() {
+                groupPermissionCheckboxes.forEach(function (checkbox) {
+                    checkbox.checked = true;
                 });
             }
 
-            // Check/Uncheck All Group Permissions
-            const groupCheckAll = document.getElementById('group-check-all');
-            const groupUncheckAll = document.getElementById('group-uncheck-all');
-
-            if (groupCheckAll) {
-                groupCheckAll.addEventListener('click', function () {
-                    document.querySelectorAll('.group-permission-checkbox').forEach(function (checkbox) {
-                        checkbox.checked = true;
-                    });
+            function groupUncheckAll() {
+                groupPermissionCheckboxes.forEach(function (checkbox) {
+                    checkbox.checked = false;
                 });
             }
 
-            if (groupUncheckAll) {
-                groupUncheckAll.addEventListener('click', function () {
-                    document.querySelectorAll('.group-permission-checkbox').forEach(function (checkbox) {
-                        checkbox.checked = false;
-                    });
-                });
-            }
+            groupCheckAllLink?.addEventListener('click', groupCheckAll);
+            groupUncheckAllLink?.addEventListener('click', groupUncheckAll);
 
-            // Permission Search Functionality
+            // Search functionality
             const permissionSearch = document.getElementById('permission-search');
             const groupPermissionSearch = document.getElementById('group-permission-search');
 
-            function setupSearch(searchInput, containerSelector) {
-                if (!searchInput) return;
-
-                searchInput.addEventListener('input', function () {
-                    const searchText = this.value.toLowerCase();
-                    const containers = document.querySelectorAll(containerSelector);
+            function setupSearch(inputElement, containerClass) {
+                inputElement?.addEventListener('input', function () {
+                    const searchText = this.value.trim().toLowerCase();
+                    const containers = document.querySelectorAll(containerClass);
 
                     containers.forEach(container => {
-                        const items = container.querySelectorAll('.permission-item, .group-permission-item');
+                        const items = container.querySelectorAll('.permission-item');
                         let hasVisibleItems = false;
 
                         items.forEach(item => {
@@ -705,11 +452,15 @@
                         });
 
                         // Show/hide app/model groups based on visibility
-                        const appGroups = container.querySelectorAll('.app-group');
-                        appGroups.forEach(appGroup => {
-                            const visibleItems = appGroup.querySelectorAll('.permission-item[style*="flex"], .permission-item:not([style])');
-                            appGroup.style.display = visibleItems.length > 0 ? 'block' : 'none';
-                        });
+                        const appGroup = container.closest('.app-group');
+                        const modelGroup = container.closest('.model-group');
+
+                        if (appGroup) {
+                            appGroup.style.display = hasVisibleItems ? 'block' : 'none';
+                        }
+                        if (modelGroup) {
+                            modelGroup.style.display = hasVisibleItems ? 'block' : 'none';
+                        }
                     });
                 });
             }
@@ -753,10 +504,6 @@
 
         .permissions-container::-webkit-scrollbar-thumb:hover {
             background: #a8a8a8;
-        }
-
-        .hover-shadow:hover {
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
         }
     </style>
 {% endblock %}

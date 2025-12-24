@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'django_filters',
     'phonenumber_field',
+    'widget_tweaks',
 
     # WEB APPS
     'allauth',
