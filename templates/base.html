@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en" data-layout="horizontal" data-topbar="light" data-sidebar="dark" data-sidebar-size="sm-hover"
-      data-sidebar-image="none" data-preloader="disable" data-sidebar-visibility="show" data-layout-style="default"
-      data-bs-theme="light" data-layout-width="fluid" data-layout-position="fixed">
+
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable" data-theme="default" data-theme-colors="default">
+
+
 <head>
 
     <meta charset="utf-8"/>
     <title>
 
         {% block title %}
-            B-Well |
+            TradeX |
 
             {# BASE HALF TITLE #}
             {% block subtitle %}
 
             {% endblock %}
             {# --------------- #}
+
         {% endblock %}
 
 
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="--"/>
+    <meta content="TradeX" name="author"/>
     <!-- App favicon -->
     <link rel="shortcut icon" href="{% static 'core/images/logos/logo.png' %}">
 
@@ -36,10 +40,6 @@
     <link href="{% static 'core/css/icons.min.css' %}" rel="stylesheet" type="text/css"/>
     <link href="{% static 'core/css/app.min.css' %}" rel="stylesheet" type="text/css"/>
     <link href="{% static 'core/css/custom.min.css' %}" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="{% static 'bwell/css/bwell.css' %}">
-    <link rel="stylesheet" href="{% static 'bwell/css/admin.css' %}">
-
-
 
     {# BASE LINKS THAT ARE REQUIRED FOR CERTAIN PAGE #}
     {% block css_down %}
@@ -84,12 +84,11 @@
     </div>
 
     <!--start back-to-top-->
-{#    <button onclick="topFunction()" class="btn btn-primary btn-icon" id="back-to-top">#}
-{#        <i class="ri-arrow-up-line"></i>#}
-{#    </button>#}
+    <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
+        <i class="ri-arrow-up-line"></i>
+    </button>
     <!--end back-to-top-->
-
-
+    
     <!--preloader-->
     <div id="preloader">
         <div id="status">

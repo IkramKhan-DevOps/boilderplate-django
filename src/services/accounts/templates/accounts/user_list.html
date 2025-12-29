@@ -1,9 +1,11 @@
 {% extends 'include/base/base_list.html' %}
 
 {% block toolbar_actions %}
-    <a href="{% url 'accounts:user_create' %}" class="btn fw-bold btn-primary shadow-sm">
-        <i class="bx bx-plus"></i> Add New
-    </a>
+    {% if perms.accounts.add_user %}
+        <a href="{% url 'accounts:user_create' %}" class="btn fw-bold btn-primary shadow-sm">
+            <i class="bx bx-plus"></i> Add New
+        </a>
+    {% endif %}
 {% endblock %}
 
 {% block sub_content %}
@@ -15,7 +17,6 @@
             <th class="text-nowrap"><i class="bx bx-envelope me-1"></i>Email</th>
             <th class="text-nowrap"><i class="bx bx-phone me-1"></i>Phone</th>
             <th class="text-nowrap"><i class="bx bx-briefcase me-1"></i>Type</th>
-            <th class="text-nowrap"><i class="bx bx-buildings me-1"></i>Platform</th>
             <th class="text-nowrap text-center"><i class="bx bx-check-circle me-1"></i>Status</th>
             <th class="text-nowrap text-center"><i class="bx bx-cog me-1"></i>Actions</th>
         </tr>
@@ -50,13 +51,6 @@
                     <span class="badge bg-light text-dark border">
                         <i class="bx bx-briefcase me-1"></i>{{ obj.get_user_type_display }}
                     </span>
-                </td>
-                <td>
-                    {% if obj.platform %}
-                        <span class="text-primary fw-semibold">{{ obj.platform }}</span>
-                    {% else %}
-                        <span class="text-muted">—</span>
-                    {% endif %}
                 </td>
                 <td class="text-center">
                     {% if obj.is_active %}
