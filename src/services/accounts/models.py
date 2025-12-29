@@ -35,17 +35,12 @@ class User(AbstractUser):
         verbose_name_plural = 'Users'
 
     def __str__(self):
-        if self.first_name or self.last_name:
-            return f"{self.first_name} {self.last_name}"
-
-        if self.username:
-            return self.username
-
-        return self.email
+        return self.get_full_name() or self.username or self.email
 
     def delete(self, *args, **kwargs):
-        self.profile_image.delete(save=True)
-        super(User, self).delete(*args, **kwargs)
+        if self.profile_image:
+            self.profile_image.delete(save=False)
+        super().delete(*args, **kwargs)
 
     def get_display_fields(self):
         return ['id', 'first_name', 'last_name', 'email', 'platform', 'user_type', 'is_active', 'is_staff']
@@ -54,9 +49,7 @@ class User(AbstractUser):
         return get_action_urls(self, user, True)
 
     def save(self, *args, **kwargs):
-        self.clean()
-
-        if self.is_staff or self.is_superuser and not self.user_type:
+        if (self.is_staff or self.is_superuser) and self.user_type == UserType.client:
             self.user_type = UserType.administration
 
         super().save(*args, **kwargs)

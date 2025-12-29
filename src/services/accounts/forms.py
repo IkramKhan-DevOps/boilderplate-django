@@ -61,13 +61,6 @@ class UserCreateForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.email = self.cleaned_data["email"]
-        user.first_name = self.cleaned_data["first_name"]
-        user.last_name = self.cleaned_data["last_name"]
-        user.user_type = self.cleaned_data["user_type"]
-        user.is_staff = self.cleaned_data["is_staff"]
-        user.is_superuser = self.cleaned_data["is_superuser"]
-        user.is_active = self.cleaned_data["is_active"]
         if commit:
             user.save()
         return user

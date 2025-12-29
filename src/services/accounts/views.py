@@ -37,17 +37,14 @@ class UserListView(StaffMixin, CustomPermissionMixin, ListView):
     permission_action = 'view'
     queryset = User.objects.all().order_by('-date_joined')
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.filterset = self.filter_class(self.request.GET, queryset=queryset)
+        return self.filterset.qs
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        filter_class = self.filter_class
-        queryset = filter_class(self.request.GET, queryset=self.queryset)
-        paginator = Paginator(queryset.qs, self.paginate_by)
-        page_number = self.request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-
-        context['filter_form'] = queryset.form
-        context['object_list'] = page_obj
+        context['filter_form'] = self.filterset.form
         return context
 
 
@@ -58,37 +55,25 @@ class UserDetailView(StaffMixin, CustomPermissionMixin, DetailView):
     permission_action = 'view'
 
     def get_context_data(self, **kwargs):
-        context = super(UserDetailView, self).get_context_data(**kwargs)
-        user = get_object_or_404(get_user_model(), id=self.kwargs.get('pk'))
+        context = super().get_context_data(**kwargs)
+        user = self.object
 
         if self.request.user.is_superuser:
-            # Get all permissions
-            all_permissions = []
-            content_types = ContentType.objects.all()
-            for content_type in content_types:
-                permissions = Permission.objects.filter(content_type=content_type)
-                all_permissions.extend(permissions)
-
-            # Get user's permissions
             user_permissions = user.user_permissions.all()
-
-            # Set checked attribute for permissions
+            all_permissions = Permission.objects.select_related('content_type').all()
+            
             for permission in all_permissions:
                 permission.checked = permission in user_permissions
 
-            # Get all groups
+            user_groups = user.groups.all()
             all_groups = Group.objects.all()
 
-            # Set checked attribute for groups
-            group_permissions = []
             for group in all_groups:
-                group.checked = group in user.groups.all()
-                group_permissions.append(group)
+                group.checked = group in user_groups
 
             context['permission_list'] = all_permissions
-            context['group_permission_list'] = group_permissions
+            context['group_permission_list'] = all_groups
 
-        context['user'] = user
         return context
 
 

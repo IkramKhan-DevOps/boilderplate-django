@@ -11,22 +11,24 @@ from src.services.accounts.models import UserType
 """ ROLES MIXINS --------------------------------------------------------------------------------------------------- """
 
 
-class SuperUserMixin(LoginRequiredMixin):
-    def dispatch(self, request, *args, **kwargs):
+class SuperUserMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_superuser
 
-        if not request.user.is_superuser:
-            raise Http404
+    def handle_no_permission(self):
+        if not self.request.user.is_authenticated:
+            return super().handle_no_permission()
+        raise Http404
 
-        return super().dispatch(request, *args, **kwargs)
 
+class StaffMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_staff
 
-class StaffMixin(LoginRequiredMixin):
-    def dispatch(self, request, *args, **kwargs):
-
-        if not request.user.is_staff:
-            raise Http404
-
-        return super().dispatch(request, *args, **kwargs)
+    def handle_no_permission(self):
+        if not self.request.user.is_authenticated:
+            return super().handle_no_permission()
+        raise Http404
 
 
 class StaffOrClientRequiredMixin(UserPassesTestMixin):
