@@ -20,9 +20,9 @@ class NotificationService:
         self.retry_id = retry_id
         self.email_id = []
 
-    def create_notification_record(self, email, status='pending', template_name=None, error_message=None):
-        for recipient in email:
-            email_record = EmailNotification.objects.create(
+    def create_notification_record(self, emails, status='pending', template_name=None, error_message=None):
+        notifications = [
+            EmailNotification(
                 subject=self.heading,
                 body=self.description,
                 recipient=recipient,
@@ -30,18 +30,24 @@ class NotificationService:
                 template_name=template_name,
                 error_message=error_message,
                 content_object=self.obj
-            )
-            self.email_id.append(email_record.id)
+            ) for recipient in emails
+        ]
+        created_notifications = EmailNotification.objects.bulk_create(notifications)
+        self.email_id.extend([obj.id for obj in created_notifications])
 
     def update_notification_record(self, ids, status, error_message=None):
-        for obj in ids:
-            email = EmailNotification.objects.filter(id=obj).first()
-            if email:
-                email.status = status
-                email.error_message = error_message
-                if status == 'failed':
-                    email.failed_attempts = F('failed_attempts') + 1
-                email.save()
+        queryset = EmailNotification.objects.filter(id__in=ids)
+        if status == 'failed':
+            queryset.update(
+                status=status,
+                error_message=error_message,
+                failed_attempts=F('failed_attempts') + 1
+            )
+        else:
+            queryset.update(
+                status=status,
+                error_message=error_message
+            )
 
     def send_email_notification_smtp(self, template, context, email=None):
         email_list = [email] if email else [user.email for user in self.recipient_list]

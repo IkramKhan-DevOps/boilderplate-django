@@ -4,6 +4,7 @@ from django.views.generic import ListView, View
 from src.apps.whisper.filters import EmailNotificationFilter
 from src.apps.whisper.main import NotificationService
 from src.apps.whisper.models import EmailNotification
+from src.core.mixins import CustomPermissionMixin
 from src.services.accounts.mixins import GenericListViewMixin
 
 
@@ -12,7 +13,10 @@ class EmailNotificationListView(GenericListViewMixin):
     filter_class = EmailNotificationFilter
 
 
-class EmailNotificationRetryView(View):
+class EmailNotificationRetryView(CustomPermissionMixin, View):
+    permission_prefix = 'whisper'
+    permission_action = 'change'
+
     def get_permission_name(self):
         return "whisper.change_emailnotification"
 

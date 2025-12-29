@@ -70,21 +70,26 @@ class CoreListViewMixin(CustomPermissionMixin, ListView):
             raise ValueError("You must set the model attribute before calling get_form_class")
         return get_dynamic_crispy_form(self.model)
 
+    def get_queryset(self):
+        queryset = self.get_qs()
+        if self.filter_class:
+            self.filterset = self.filter_class(self.request.GET, queryset=queryset)
+            return self.filterset.qs
+        return queryset
+
     def get_context_data(self, **kwargs):
         # noinspection PyProtectedMember
         context = super().get_context_data(**kwargs)
-        queryset = self.filter_class(self.request.GET, queryset=self.get_qs())
-        paginator = Paginator(queryset.qs, self.paginate_by)
-        page_number = self.request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-        _form = self.get_form_class()
-        object_forms = {obj.id: _form(instance=obj) for obj in page_obj}
-        context['form'] = self.get_form_class()
-        context['filter_form'] = queryset.form
-        context['object_list'] = page_obj
+        queryset_qs = self.get_queryset()
+
+        _form_class = self.get_form_class()
+        object_forms = {obj.id: _form_class(instance=obj) for obj in context['object_list']}
+
+        context['form'] = _form_class
+        context['filter_form'] = self.filterset.form if self.filter_class else None
         context['object_forms'] = object_forms
         context['model_class'] = self.model
-        context['list_header'] = self.get_list_header(queryset.qs) if self.aggregation_fields else None
+        context['list_header'] = self.get_list_header(queryset_qs) if self.aggregation_fields else None
         context['model_verbose_name'] = self.model._meta.verbose_name.capitalize()
         context['model_verbose_name_plural'] = self.model._meta.verbose_name_plural.capitalize()
         return context

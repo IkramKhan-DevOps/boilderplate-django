@@ -350,9 +350,9 @@ def cool_number(value, num_decimals=2):
 
 @register.filter
 def check_permission(request, perms, permission_name):
-    if request.user.is_superuser or perms.permission_name:
+    if request.user.is_superuser:
         return True
-    return False
+    return perms and perms.get(permission_name, False)
 
 
 from django.utils.safestring import mark_safe
@@ -403,12 +403,6 @@ def cool_number2(value, num_decimals=2):
 
     except (ValueError, TypeError, AttributeError):
         return str(value)
-
-@register.filter
-def check_permission(request, perms, permission_name):
-    if request.user.is_superuser or perms.permission_name:
-        return True
-    return False
 
 @register.simple_tag
 def model_verbose_name(obj):

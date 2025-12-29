@@ -25,7 +25,7 @@ class EmailNotification(models.Model):
 
     # Generic foreign key to relate this model to any other model
     content_type = models.ForeignKey(ContentType, on_delete=models.SET_NULL, blank=True, null=True)
-    object_id = models.CharField(max_length=36)
+    object_id = models.CharField(max_length=36, blank=True, null=True)
     content_object = GenericForeignKey('content_type', 'object_id')
 
     created_at = models.DateTimeField(auto_now_add=True)
