@@ -21,9 +21,11 @@ src/
 ├── core/               # Core utilities (models, helpers, signals, validators)
 ├── services/           # Backend services
 │   ├── accounts/       # User accounts & authentication
-│   └── dashboard/      # Dashboard functionality
-└── web/                # Frontend web apps
-    └── website/        # Public website
+│   ├── dashboard/      # Dashboard functionality
+│   └── management/     # Management functionality (Country, State)
+├── apps/               # Independent applications
+│   └── whisper/        # Notification service
+└── website/            # Public website (frontend)
 ```
 
 ## Bash Scripts

@@ -52,11 +52,7 @@ fi
 
 # Step 5: Make migrations
 echo "🔧 Step 5: Making migrations..."
-python manage.py makemigrations company
-python manage.py makemigrations projects
-python manage.py makemigrations resources
-python manage.py makemigrations services
-python manage.py makemigrations website
+python manage.py makemigrations
 echo "   ✅ Migrations created"
 
 # Step 6: Apply migrations
